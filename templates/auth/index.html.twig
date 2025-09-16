@@ -1,20 +1,341 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AuthController!{% endblock %}
+{% block title %}Autenticación - ViveCarnaval{% endblock %}
+
+{% block stylesheets %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .tab-active {
+            position: relative;
+            color: #7e22ce;
+            font-weight: 600;
+        }
+        .tab-active::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, #7e22ce, #d946ef);
+            border-radius: 4px;
+        }
+        
+        .input-focus:focus {
+            box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.2);
+            border-color: #7e22ce;
+        }
+        
+        .btn-gradient {
+            background: linear-gradient(90deg, #7e22ce, #d946ef);
+            transition: all 0.3s ease;
+        }
+        .btn-gradient:hover {
+            background: linear-gradient(90deg, #6b21a8, #c026d3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 
+                        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .social-btn { transition: all 0.3s ease; }
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 
+                        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        
+        .password-toggle { cursor: pointer; transition: color 0.2s; }
+        .password-toggle:hover { color: #7e22ce; }
+        
+        .icon-container { transition: transform 0.3s ease; }
+        .input-container:hover .icon-container { transform: scale(1.1); }
+    </style>
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <!-- Logo y título -->
+        <div class="text-center">
+            <div class="mx-auto h-16 w-16 bg-gradient-to-r from-purple-600 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg mb-4">
+                <i class="fas fa-mask text-white text-2xl"></i>
+            </div>
+            <h2 class="text-3xl font-extrabold text-gray-900">ViveCarnaval</h2>
+            <p class="mt-2 text-sm text-gray-600">Vive la experiencia del carnaval como nunca antes</p>
+        </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        <!-- Card de login/register -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden card-hover">
+            <!-- Tabs -->
+            <div class="flex border-b border-gray-200">
+                <button id="login-tab" class="flex-1 py-4 px-6 text-center font-medium text-gray-500 hover:text-purple-700 transition-colors duration-300 tab-active">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
+                </button>
+                <button id="register-tab" class="flex-1 py-4 px-6 text-center font-medium text-gray-500 hover:text-purple-700 transition-colors duration-300">
+                    <i class="fas fa-user-plus mr-2"></i>Registrarse
+                </button>
+            </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/mcasanova/vivecarnaval-api/src/Controller/AuthController.php</code></li>
-        <li>Your template at <code>/home/mcasanova/vivecarnaval-api/templates/auth/index.html.twig</code></li>
-    </ul>
+            <!-- Login -->
+            <div id="login-form" class="p-8 fade-in">
+                <form id="loginForm" class="space-y-6">
+                    <!-- Email -->
+                    <div class="relative input-container">
+                        <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <div class="icon-container"><i class="fas fa-envelope text-gray-400"></i></div>
+                            </div>
+                            <input type="email" id="login-email" name="correo" required 
+                                class="mt-1 block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none input-focus placeholder-gray-400"
+                                placeholder="tu@email.com">
+                        </div>
+                    </div>
+                    <!-- Password -->
+                    <div class="relative input-container">
+                        <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <div class="icon-container"><i class="fas fa-lock text-gray-400"></i></div>
+                            </div>
+                            <input type="password" id="login-password" name="contrasena" required 
+                                class="mt-1 block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none input-focus placeholder-gray-400"
+                                placeholder="••••••••">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                <i class="far fa-eye-slash text-gray-400 password-toggle" id="login-toggle-password"></i>
+                            </div>
+                        </div>
+                        <div class="text-right mt-2">
+                            <a href="#" class="text-sm font-medium text-purple-600 hover:text-purple-500 transition-colors duration-300">
+                                <i class="fas fa-key mr-1"></i>¿Olvidaste tu contraseña?
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white btn-gradient">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
+                    </button>
+                    
+                    <div class="relative flex items-center justify-center mt-6">
+                        <div class="border-t border-gray-300 w-full"></div>
+                        <span class="bg-white px-3 text-sm text-gray-500">o continúa con</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-3 mt-4">
+                        <button type="button" class="social-btn w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-xl bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                            <i class="fab fa-google text-red-500 mr-2"></i> Google
+                        </button>
+                        <button type="button" class="social-btn w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-xl bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                            <i class="fab fa-facebook text-blue-600 mr-2"></i> Facebook
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Register -->
+            <div id="register-form" class="p-8 hidden fade-in">
+                <form id="registerForm" class="space-y-6">
+                    <!-- Nombre -->
+                    <div class="relative input-container">
+                        <label for="register-name" class="block text-sm font-medium text-gray-700 mb-1">Nombre completo</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <div class="icon-container"><i class="fas fa-user text-gray-400"></i></div>
+                            </div>
+                            <input type="text" id="register-name" name="nombre" required 
+                                class="mt-1 block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none input-focus placeholder-gray-400"
+                                placeholder="Tu nombre completo">
+                        </div>
+                    </div>
+                    <!-- Email -->
+                    <div class="relative input-container">
+                        <label for="register-email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <div class="icon-container"><i class="fas fa-envelope text-gray-400"></i></div>
+                            </div>
+                            <input type="email" id="register-email" name="correo" required 
+                                class="mt-1 block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none input-focus placeholder-gray-400"
+                                placeholder="tu@email.com">
+                        </div>
+                    </div>
+                    <!-- Password -->
+                    <div class="relative input-container">
+                        <label for="register-password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <div class="icon-container"><i class="fas fa-lock text-gray-400"></i></div>
+                            </div>
+                            <input type="password" id="register-password" name="contrasena" required 
+                                class="mt-1 block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none input-focus placeholder-gray-400"
+                                placeholder="••••••••">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                <i class="far fa-eye-slash text-gray-400 password-toggle" id="register-toggle-password"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Rol -->
+                    <div class="relative input-container">
+                        <label for="register-role" class="block text-sm font-medium text-gray-700 mb-1">Rol</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <div class="icon-container"><i class="fas fa-user-tag text-gray-400"></i></div>
+                            </div>
+                            <select id="register-role" name="rol" 
+                                class="mt-1 block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none input-focus appearance-none bg-white">
+                                <option value="ROLE_USER">Usuario</option>
+                                <option value="ROLE_ADMIN">Administrador</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input id="terms" name="terms" type="checkbox" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
+                        <label for="terms" class="ml-2 block text-sm text-gray-700">
+                            Acepto los <a href="#" class="font-medium text-purple-600 hover:text-purple-500">términos y condiciones</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white btn-gradient">
+                        <i class="fas fa-user-plus mr-2"></i>Crear Cuenta
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="text-center text-sm text-gray-600">
+            <p><i class="far fa-copyright mr-1"></i>2023 ViveCarnaval. Todos los derechos reservados.</p>
+        </div>
+    </div>
 </div>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loginTab = document.getElementById('login-tab');
+    const registerTab = document.getElementById('register-tab');
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    
+    function setupPasswordToggle(toggleId, passwordId) {
+        const toggle = document.getElementById(toggleId);
+        const password = document.getElementById(passwordId);
+        if (toggle && password) {
+            toggle.addEventListener('click', function() {
+                if (password.type === 'password') {
+                    password.type = 'text';
+                    toggle.classList.replace('fa-eye-slash', 'fa-eye');
+                } else {
+                    password.type = 'password';
+                    toggle.classList.replace('fa-eye', 'fa-eye-slash');
+                }
+            });
+        }
+    }
+    setupPasswordToggle('login-toggle-password', 'login-password');
+    setupPasswordToggle('register-toggle-password', 'register-password');
+
+    function switchToLogin() {
+        loginForm.classList.remove('hidden');
+        registerForm.classList.add('hidden');
+        loginTab.classList.add('tab-active');
+        registerTab.classList.remove('tab-active');
+        loginForm.classList.add('fade-in');
+        setTimeout(() => loginForm.classList.remove('fade-in'), 500);
+    }
+    function switchToRegister() {
+        registerForm.classList.remove('hidden');
+        loginForm.classList.add('hidden');
+        registerTab.classList.add('tab-active');
+        loginTab.classList.remove('tab-active');
+        registerForm.classList.add('fade-in');
+        setTimeout(() => registerForm.classList.remove('fade-in'), 500);
+    }
+    loginTab.addEventListener('click', switchToLogin);
+    registerTab.addEventListener('click', switchToRegister);
+
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = this.querySelector('button[type="submit"]');
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Iniciando sesión...';
+        btn.disabled = true;
+        const formData = new FormData(this);
+        const data = { correo: formData.get('correo'), contrasena: formData.get('contrasena') };
+        try {
+            const response = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            const result = await response.json();
+            if (response.ok) {
+                showMessage('¡Inicio de sesión exitoso!', 'Te estamos redirigiendo...', 'success');
+                if (result.token) localStorage.setItem('auth_token', result.token);
+                setTimeout(() => window.location.href = '/', 2000);
+            } else {
+                showMessage('Error en el inicio de sesión', result.error || 'Credenciales inválidas', 'error');
+                btn.innerHTML = original; btn.disabled = false;
+            }
+        } catch {
+            showMessage('Error de conexión', 'No se pudo conectar con el servidor.', 'error');
+            btn.innerHTML = original; btn.disabled = false;
+        }
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = this.querySelector('button[type="submit"]');
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Creando cuenta...';
+        btn.disabled = true;
+        const formData = new FormData(this);
+        const data = { nombre: formData.get('nombre'), correo: formData.get('correo'), contrasena: formData.get('contrasena'), rol: formData.get('rol') };
+        try {
+            const response = await fetch('/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            const result = await response.json();
+            if (response.status === 201) {
+                showMessage('¡Registro exitoso!', 'Ahora puedes iniciar sesión.', 'success');
+                this.reset();
+                setTimeout(() => { switchToLogin(); btn.innerHTML = original; btn.disabled = false; }, 2000);
+            } else {
+                showMessage('Error en el registro', result.error || 'Intenta nuevamente', 'error');
+                btn.innerHTML = original; btn.disabled = false;
+            }
+        } catch {
+            showMessage('Error de conexión', 'No se pudo conectar con el servidor.', 'error');
+            btn.innerHTML = original; btn.disabled = false;
+        }
+    });
+
+    function showMessage(title, text, type) {
+        Swal.fire({
+            icon: type,
+            title: title,
+            text: text,
+            confirmButtonColor: type === 'success' ? '#7e22ce' : '#dc2626',
+            background: '#f9fafb',
+            backdrop: type === 'success' ? 'rgba(126,34,206,0.2)' : 'rgba(220,38,38,0.2)'
+        });
+    }
+});
+</script>
 {% endblock %}

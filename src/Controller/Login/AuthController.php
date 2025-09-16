@@ -15,7 +15,7 @@ use App\Entity\Login\Usuarios;
 final class AuthController extends AbstractController
 {
     #[Route('/login/auth', name: 'app_login_auth')]
-    public function index(): Response
+    public function indexLogin(): Response
     {
         return $this->render('login/auth/index.html.twig', [
             'controller_name' => 'AuthController',
@@ -59,12 +59,15 @@ public function register(Request $request, UserPasswordHasherInterface $password
     return new JsonResponse(['message' => 'Usuario registrado correctamente'], 201);
 }
 
-#[Route('/api/login', name: 'api_login', methods: ['POST'])]
-public function login(Request $request): JsonResponse
-{
-    // Este método puede estar vacío, LexikJWT se encarga de autenticar
-    return new JsonResponse(['message' => 'Use /api/login con POST y JSON'], 200);
-}
-
-
+    #[Route('/api/login', name: 'api_login', methods: ['POST'])]
+    public function login(): JsonResponse
+    {
+        // LexikJWT maneja la autenticación automáticamente
+        $user = $this->getUser();
+        
+        return new JsonResponse([
+            'message' => 'Login exitoso',
+            'token' => $this->jwtTokenManager->create($user) // Si usas JWT
+        ], 200);
+    }
 }
