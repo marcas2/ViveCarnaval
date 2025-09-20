@@ -4,227 +4,193 @@
 
 {% block stylesheets %}
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
         body {
             font-family: 'Poppins', sans-serif;
         }
-        
-        .card-hover { transition: all 0.3s ease; }
+        .tab-active {
+            border-bottom: 3px solid #7e22ceb6;
+            color: #7e22ce93;
+            font-weight: 600;
+        }
+        .form-transition {
+            transition: all 0.3s ease-in-out;
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
         .card-hover:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-        
-        .tab-active {
-            position: relative;
-            color: #7e22ce;
-            font-weight: 600;
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2c2 100%);
         }
-        .tab-active::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 100%; height: 3px;
-            background: linear-gradient(90deg, #7e22ce, #d946ef);
-            border-radius: 4px;
-        }
-        
-        .input-focus:focus {
-            box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.2);
-            border-color: #7e22ce;
-        }
-        
         .btn-gradient {
-            background: linear-gradient(90deg, #7e22ce, #d946ef);
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #7e22cea1 0%, #3b82f6 100%);
         }
         .btn-gradient:hover {
-            background: linear-gradient(90deg, #6b21a8, #c026d3);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 
-                        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            background: linear-gradient(135deg, #3b82f6 0%, #7e22cea1 100%);
         }
-        
-        .social-btn { transition: all 0.3s ease; }
-        .social-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 
-                        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        .btn-register {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
         }
-        
-        .fade-in { animation: fadeIn 0.5s ease-in-out; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to   { opacity: 1; transform: translateY(0); }
+        .btn-register:hover {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
         }
-        
-        .password-toggle { cursor: pointer; transition: color 0.2s; }
-        .password-toggle:hover { color: #7e22ce; }
-        
-        .icon-container { transition: transform 0.3s ease; }
-        .input-container:hover .icon-container { transform: scale(1.1); }
     </style>
 {% endblock %}
 
 {% block body %}
-<div class="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
-        <!-- Logo y título -->
-        <div class="text-center">
-            <div class="mx-auto h-16 w-16 bg-gradient-to-r from-purple-600 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg mb-4">
-                <i class="fas fa-mask text-white text-2xl"></i>
+<div class="min-h-screen gradient-bg flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl w-full mx-4">
+        <div class="flex flex-col md:flex-row rounded-2xl overflow-hidden shadow-2xl card-hover">
+            <!-- Sección ilustrativa -->
+            <div class="md:w-2/5 bg-gradient-to-br from-purple-900 to-blue-800 p-8 text-white flex flex-col justify-center hidden md:block">
+                <div class="text-center mb-8 transform transition-all duration-700 animate-fade-in">
+                    <h2 class="text-3xl font-bold mb-2">¡Bienvenido a ViveCarnaval!</h2>
+                    <p class="opacity-90">Descubre y vive la magia de los carnavales alrededor del mundo</p>
+                </div>
+                <div class="space-y-4 mt-6">
+                    <div class="flex items-center opacity-90 transform transition-transform duration-300 hover:translate-x-2">
+                        <div class="bg-white bg-opacity-20 rounded-full p-2 mr-3">
+                            <i class="fas fa-ticket-alt text-xl"></i>
+                        </div>
+                        <p>Accede a eventos exclusivos</p>
+                    </div>
+                    <div class="flex items-center opacity-90 transform transition-transform duration-300 hover:translate-x-2">
+                        <div class="bg-white bg-opacity-20 rounded-full p-2 mr-3">
+                            <i class="fas fa-calendar-day text-xl"></i>
+                        </div>
+                        <p>Planifica tu experiencia carnavalera</p>
+                    </div>
+                    <div class="flex items-center opacity-90 transform transition-transform duration-300 hover:translate-x-2">
+                        <div class="bg-white bg-opacity-20 rounded-full p-2 mr-3">
+                            <i class="fas fa-users text-xl"></i>
+                        </div>
+                        <p>Conecta con otros amantes del carnaval</p>
+                    </div>
+                </div>
             </div>
-            <h2 class="text-3xl font-extrabold text-gray-900">ViveCarnaval</h2>
-            <p class="mt-2 text-sm text-gray-600">Vive la experiencia del carnaval como nunca antes</p>
-        </div>
-
-        <!-- Card de login/register -->
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden card-hover">
-            <!-- Tabs -->
-            <div class="flex border-b border-gray-200">
-                <button id="login-tab" class="flex-1 py-4 px-6 text-center font-medium text-gray-500 hover:text-purple-700 transition-colors duration-300 tab-active">
-                    <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
-                </button>
-                <button id="register-tab" class="flex-1 py-4 px-6 text-center font-medium text-gray-500 hover:text-purple-700 transition-colors duration-300">
-                    <i class="fas fa-user-plus mr-2"></i>Registrarse
-                </button>
-            </div>
-
-            <!-- Login -->
-            <div id="login-form" class="p-8 fade-in">
-                <form id="loginForm" class="space-y-6">
-                    <!-- Email -->
-                    <div class="relative input-container">
-                        <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <div class="icon-container"><i class="fas fa-envelope text-gray-400"></i></div>
-                            </div>
-                            <input type="email" id="login-email" name="correo" required 
-                                class="mt-1 block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none input-focus placeholder-gray-400"
-                                placeholder="tu@email.com">
-                        </div>
-                    </div>
-                    <!-- Password -->
-                    <div class="relative input-container">
-                        <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <div class="icon-container"><i class="fas fa-lock text-gray-400"></i></div>
-                            </div>
-                            <input type="password" id="login-password" name="contrasena" required 
-                                class="mt-1 block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none input-focus placeholder-gray-400"
-                                placeholder="••••••••">
-                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                                <i class="far fa-eye-slash text-gray-400 password-toggle" id="login-toggle-password"></i>
-                            </div>
-                        </div>
-                        <div class="text-right mt-2">
-                            <a href="#" class="text-sm font-medium text-purple-600 hover:text-purple-500 transition-colors duration-300">
-                                <i class="fas fa-key mr-1"></i>¿Olvidaste tu contraseña?
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white btn-gradient">
-                        <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
-                    </button>
-                    
-                    <div class="relative flex items-center justify-center mt-6">
-                        <div class="border-t border-gray-300 w-full"></div>
-                        <span class="bg-white px-3 text-sm text-gray-500">o continúa con</span>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-3 mt-4">
-                        <button type="button" class="social-btn w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-xl bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                            <i class="fab fa-google text-red-500 mr-2"></i> Google
+            
+            <!-- Sección de formularios -->
+            <div class="md:w-3/5 bg-white p-8">
+                <div class="text-center mb-8">
+                    <img src="/img/ViveCarnaval.png" class="h-16 mx-auto mb-4 animate-pulse">
+                    <h1 class="text-2xl font-bold text-gray-800">Accede a tu cuenta</h1>
+                    <p class="text-gray-600">Gestiona tus eventos y vive la experiencia carnavalera</p>
+                </div>
+                
+                <!-- Tabs para Login y Register -->
+                <div class="bg-white rounded-lg overflow-hidden mb-6">
+                    <div class="flex border-b">
+                        <button id="login-tab" class="flex-1 py-4 px-6 text-center font-medium text-gray-500 hover:text-purple-700 border-b-2 border-transparent focus:outline-none transition-colors duration-300 flex items-center justify-center">
+                            <i class="fas fa-sign-in-alt mr-2"></i> Iniciar Sesión
                         </button>
-                        <button type="button" class="social-btn w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-xl bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                            <i class="fab fa-facebook text-blue-600 mr-2"></i> Facebook
+                        <button id="register-tab" class="flex-1 py-4 px-6 text-center font-medium text-gray-500 hover:text-purple-700 border-b-2 border-transparent focus:outline-none transition-colors duration-300 flex items-center justify-center">
+                            <i class="fas fa-user-plus mr-2"></i> Registrarse
                         </button>
                     </div>
-                </form>
-            </div>
 
-            <!-- Register -->
-            <div id="register-form" class="p-8 hidden fade-in">
-                <form id="registerForm" class="space-y-6">
-                    <!-- Nombre -->
-                    <div class="relative input-container">
-                        <label for="register-name" class="block text-sm font-medium text-gray-700 mb-1">Nombre completo</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <div class="icon-container"><i class="fas fa-user text-gray-400"></i></div>
+                    <!-- Formulario de Login -->
+                    <div id="login-form" class="p-6 form-transition">
+                        <form id="loginForm" class="space-y-6">
+                            <div>
+                                <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-envelope text-gray-400"></i>
+                                    </div>
+                                    <input type="email" id="login-email" name="correo" required class="mt-1 block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 sm:text-sm transition-colors duration-200">
+                                </div>
                             </div>
-                            <input type="text" id="register-name" name="nombre" required 
-                                class="mt-1 block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none input-focus placeholder-gray-400"
-                                placeholder="Tu nombre completo">
-                        </div>
+                            <div>
+                                <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-lock text-gray-400"></i>
+                                    </div>
+                                    <input type="password" id="login-password" name="contrasena" required class="mt-1 block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 sm:text-sm transition-colors duration-200">
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
+                                    <label for="remember-me" class="ml-2 block text-sm text-gray-700">Recordarme</label>
+                                </div>
+                                <div class="text-sm">
+                                    <a href="#" class="font-medium text-purple-600 hover:text-purple-500 transition-colors duration-200">¿Olvidaste tu contraseña?</a>
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white btn-gradient hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-300">
+                                <i class="fas fa-sign-in-alt mr-2"></i> Iniciar Sesión
+                            </button>
+                        </form>
+
                     </div>
-                    <!-- Email -->
-                    <div class="relative input-container">
-                        <label for="register-email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <div class="icon-container"><i class="fas fa-envelope text-gray-400"></i></div>
+
+                    <!-- Formulario de Register -->
+                    <div id="register-form" class="p-6 form-transition hidden">
+                        <form id="registerForm" class="space-y-6">
+                            <div>
+                                <label for="register-name" class="block text-sm font-medium text-gray-700 mb-1">Nombre completo</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-user text-gray-400"></i>
+                                    </div>
+                                    <input type="text" id="register-name" name="nombre" required class="mt-1 block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 sm:text-sm transition-colors duration-200">
+                                </div>
                             </div>
-                            <input type="email" id="register-email" name="correo" required 
-                                class="mt-1 block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none input-focus placeholder-gray-400"
-                                placeholder="tu@email.com">
-                        </div>
+                            <div>
+                                <label for="register-email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-envelope text-gray-400"></i>
+                                    </div>
+                                    <input type="email" id="register-email" name="correo" required class="mt-1 block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 sm:text-sm transition-colors duration-200">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="register-password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-lock text-gray-400"></i>
+                                    </div>
+                                    <input type="password" id="register-password" name="contrasena" required class="mt-1 block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 sm:text-sm transition-colors duration-200">
+                                </div>
+                                <p class="mt-1 text-xs text-gray-500">Mínimo 8 caracteres con letras y números</p>
+                            </div>
+                            <div>
+                                <label for="register-role" class="block text-sm font-medium text-gray-700 mb-1">Tipo de cuenta</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-user-tag text-gray-400"></i>
+                                    </div>
+                                    <select id="register-role" name="rol" class="mt-1 block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 sm:text-sm transition-colors duration-200">
+                                        <option value="ROLE_USER">Usuario</option>
+                                        <option value="ROLE_ADMIN">Administrador</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="terms" name="terms" type="checkbox" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded" required>
+                                <label for="terms" class="ml-2 block text-sm text-gray-700">
+                                    Acepto los <a href="#" class="text-purple-600 hover:text-purple-500 transition-colors duration-200">términos y condiciones</a> y la <a href="#" class="text-purple-600 hover:text-purple-500 transition-colors duration-200">política de privacidad</a>
+                                </label>
+                            </div>
+                            <button type="submit" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white btn-register hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-300">
+                                <i class="fas fa-user-plus mr-2"></i> Crear cuenta
+                            </button>
+                        </form>
                     </div>
-                    <!-- Password -->
-                    <div class="relative input-container">
-                        <label for="register-password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <div class="icon-container"><i class="fas fa-lock text-gray-400"></i></div>
-                            </div>
-                            <input type="password" id="register-password" name="contrasena" required 
-                                class="mt-1 block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none input-focus placeholder-gray-400"
-                                placeholder="••••••••">
-                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                                <i class="far fa-eye-slash text-gray-400 password-toggle" id="register-toggle-password"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Rol -->
-                    <div class="relative input-container">
-                        <label for="register-role" class="block text-sm font-medium text-gray-700 mb-1">Rol</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <div class="icon-container"><i class="fas fa-user-tag text-gray-400"></i></div>
-                            </div>
-                            <select id="register-role" name="rol" 
-                                class="mt-1 block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none input-focus appearance-none bg-white">
-                                <option value="ROLE_USER">Usuario</option>
-                                <option value="ROLE_ADMIN">Administrador</option>
-                            </select>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center">
-                        <input id="terms" name="terms" type="checkbox" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
-                        <label for="terms" class="ml-2 block text-sm text-gray-700">
-                            Acepto los <a href="#" class="font-medium text-purple-600 hover:text-purple-500">términos y condiciones</a>
-                        </label>
-                    </div>
-                    
-                    <button type="submit" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white btn-gradient">
-                        <i class="fas fa-user-plus mr-2"></i>Crear Cuenta
-                    </button>
-                </form>
+                </div>
+                
+                <div class="text-center text-sm text-gray-600 mt-4">
+                    <p>Al acceder, aceptas nuestras <a href="#" class="text-purple-600 hover:text-purple-800 transition-colors duration-200">Condiciones</a>, <a href="#" class="text-purple-600 hover:text-purple-800 transition-colors duration-200">Política de datos</a> y <a href="#" class="text-purple-600 hover:text-purple-800 transition-colors duration-200">Política de cookies</a>.</p>
+                </div>
             </div>
-        </div>
-        
-        <div class="text-center text-sm text-gray-600">
-            <p><i class="far fa-copyright mr-1"></i>2023 ViveCarnaval. Todos los derechos reservados.</p>
         </div>
     </div>
 </div>
@@ -238,104 +204,133 @@ document.addEventListener('DOMContentLoaded', function() {
     const registerTab = document.getElementById('register-tab');
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
-    
-    function setupPasswordToggle(toggleId, passwordId) {
-        const toggle = document.getElementById(toggleId);
-        const password = document.getElementById(passwordId);
-        if (toggle && password) {
-            toggle.addEventListener('click', function() {
-                if (password.type === 'password') {
-                    password.type = 'text';
-                    toggle.classList.replace('fa-eye-slash', 'fa-eye');
-                } else {
-                    password.type = 'password';
-                    toggle.classList.replace('fa-eye', 'fa-eye-slash');
+
+    // Función para activar una pestaña
+    function activateTab(tab, form, otherTab, otherForm) {
+        otherForm.classList.add('hidden');
+        form.classList.remove('hidden');
+        otherTab.classList.remove('tab-active', 'text-purple-700', 'border-purple-500');
+        tab.classList.add('tab-active', 'text-purple-700', 'border-purple-500');
+        
+        // Animación de aparición
+        form.style.opacity = 0;
+        form.style.transform = 'translateY(10px)';
+        form.classList.remove('hidden');
+        
+        setTimeout(() => {
+            form.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            form.style.opacity = 1;
+            form.style.transform = 'translateY(0)';
+        }, 10);
+    }
+
+    // Manejo de tabs
+    loginTab.addEventListener('click', () => {
+        activateTab(loginTab, loginForm, registerTab, registerForm);
+    });
+
+    registerTab.addEventListener('click', () => {
+        activateTab(registerTab, registerForm, loginTab, loginForm);
+    });
+
+    // Formulario de Login
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const data = {
+            correo: formData.get('correo'),
+            contrasena: formData.get('contrasena')
+        };
+
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                showMessage('¡Inicio de sesión exitoso! Redirigiendo...', 'success');
+                if (result.token) {
+                    localStorage.setItem('auth_token', result.token);
                 }
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+            } else {
+                showMessage(result.error || 'Error en el inicio de sesión', 'error');
+            }
+        } catch (error) {
+            showMessage('Error de conexión', 'error');
+        }
+    });
+
+    // Formulario de Register
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const data = {
+            nombre: formData.get('nombre'),
+            correo: formData.get('correo'),
+            contrasena: formData.get('contrasena'),
+            rol: formData.get('rol')
+        };
+
+        try {
+            const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.status === 201) {
+                showMessage('¡Registro exitoso! Ahora puedes iniciar sesión.', 'success');
+                this.reset();
+                setTimeout(() => {
+                    loginTab.click();
+                }, 2000);
+            } else {
+                showMessage(result.error || 'Error en el registro', 'error');
+            }
+        } catch (error) {
+            showMessage('Error de conexión', 'error');
+        }
+    });
+
+    function showMessage(message, type) {
+        if (type === 'success') {
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: message,
+                confirmButtonColor: '#7e22ce',
+                background: '#fff',
+                iconColor: '#7e22ce'
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: message,
+                confirmButtonColor: '#dc2626',
+                background: '#fff',
+                iconColor: '#dc2626'
             });
         }
     }
-    setupPasswordToggle('login-toggle-password', 'login-password');
-    setupPasswordToggle('register-toggle-password', 'register-password');
 
-    function switchToLogin() {
-        loginForm.classList.remove('hidden');
-        registerForm.classList.add('hidden');
-        loginTab.classList.add('tab-active');
-        registerTab.classList.remove('tab-active');
-        loginForm.classList.add('fade-in');
-        setTimeout(() => loginForm.classList.remove('fade-in'), 500);
-    }
-    function switchToRegister() {
-        registerForm.classList.remove('hidden');
-        loginForm.classList.add('hidden');
-        registerTab.classList.add('tab-active');
-        loginTab.classList.remove('tab-active');
-        registerForm.classList.add('fade-in');
-        setTimeout(() => registerForm.classList.remove('fade-in'), 500);
-    }
-    loginTab.addEventListener('click', switchToLogin);
-    registerTab.addEventListener('click', switchToRegister);
-
-    document.getElementById('loginForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const btn = this.querySelector('button[type="submit"]');
-        const original = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Iniciando sesión...';
-        btn.disabled = true;
-        const formData = new FormData(this);
-        const data = { correo: formData.get('correo'), contrasena: formData.get('contrasena') };
-        try {
-            const response = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-            const result = await response.json();
-            if (response.ok) {
-                showMessage('¡Inicio de sesión exitoso!', 'Te estamos redirigiendo...', 'success');
-                if (result.token) localStorage.setItem('auth_token', result.token);
-                setTimeout(() => window.location.href = '/', 2000);
-            } else {
-                showMessage('Error en el inicio de sesión', result.error || 'Credenciales inválidas', 'error');
-                btn.innerHTML = original; btn.disabled = false;
-            }
-        } catch {
-            showMessage('Error de conexión', 'No se pudo conectar con el servidor.', 'error');
-            btn.innerHTML = original; btn.disabled = false;
-        }
-    });
-
-    document.getElementById('registerForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const btn = this.querySelector('button[type="submit"]');
-        const original = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Creando cuenta...';
-        btn.disabled = true;
-        const formData = new FormData(this);
-        const data = { nombre: formData.get('nombre'), correo: formData.get('correo'), contrasena: formData.get('contrasena'), rol: formData.get('rol') };
-        try {
-            const response = await fetch('/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-            const result = await response.json();
-            if (response.status === 201) {
-                showMessage('¡Registro exitoso!', 'Ahora puedes iniciar sesión.', 'success');
-                this.reset();
-                setTimeout(() => { switchToLogin(); btn.innerHTML = original; btn.disabled = false; }, 2000);
-            } else {
-                showMessage('Error en el registro', result.error || 'Intenta nuevamente', 'error');
-                btn.innerHTML = original; btn.disabled = false;
-            }
-        } catch {
-            showMessage('Error de conexión', 'No se pudo conectar con el servidor.', 'error');
-            btn.innerHTML = original; btn.disabled = false;
-        }
-    });
-
-    function showMessage(title, text, type) {
-        Swal.fire({
-            icon: type,
-            title: title,
-            text: text,
-            confirmButtonColor: type === 'success' ? '#7e22ce' : '#dc2626',
-            background: '#f9fafb',
-            backdrop: type === 'success' ? 'rgba(126,34,206,0.2)' : 'rgba(220,38,38,0.2)'
-        });
-    }
+    // Inicializar con la pestaña de login activa
+    loginTab.classList.add('tab-active', 'text-purple-700', 'border-purple-500');
 });
 </script>
 {% endblock %}
