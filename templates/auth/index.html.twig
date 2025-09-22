@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     localStorage.setItem('auth_token', result.token);
                 }
                 setTimeout(() => {
-                    window.location.href = '/';
+                    window.location.href = '/home';
                 }, 2000);
             } else {
                 showMessage(result.error || 'Error en el inicio de sesión', 'error');

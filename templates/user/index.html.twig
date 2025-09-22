@@ -1,0 +1,131 @@
+{# templates/user/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="max-w-3xl mx-auto p-6">
+  <h2 class="text-2xl font-bold mb-4">Mi perfil</h2>
+
+  {# Vista del perfil #}
+  <div id="profileView" class="mb-6">
+    <img id="profileImage" src="{{ asset('images/default-avatar.png') }}" alt="avatar" class="w-24 h-24 rounded-full mb-2">
+    <h3 id="profileName" class="text-xl font-semibold"></h3>
+    <p id="profileBio"></p>
+    <button id="editBtn" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Editar perfil</button>
+  </div>
+
+  {# Formulario de edición #}
+  <div id="profileEdit" class="hidden bg-white p-4 rounded shadow">
+    <form id="profileForm" enctype="multipart/form-data">
+      <label class="block mt-2 font-medium">Nombre</label>
+      <input name="nombre" id="nombre" required class="w-full border rounded px-3 py-2" />
+
+      <label class="block mt-2 font-medium">Biografía</label>
+      <textarea name="biografia" id="biografia" class="w-full border rounded px-3 py-2"></textarea>
+
+      <label class="block mt-2 font-medium">Contraseña (opcional)</label>
+      <input name="contrasena" id="contrasena" type="password" class="w-full border rounded px-3 py-2" />
+
+      <label class="block mt-2 font-medium">Foto</label>
+      <input type="file" id="foto" name="foto" accept="image/*" class="w-full" />
+
+      <div class="flex gap-2 mt-4">
+        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Guardar</button>
+        <button type="button" id="cancelBtn" class="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const editBtn = document.getElementById('editBtn');
+  const profileEdit = document.getElementById('profileEdit');
+  const profileView = document.getElementById('profileView');
+  const profileForm = document.getElementById('profileForm');
+
+  const DEFAULT_AVATAR = '/images/default-avatar.png';
+
+  // --- Función para parsear respuesta segura ---
+  async function parseResponse(res) {
+    const contentType = res.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+      return await res.json();
+    } else {
+      const text = await res.text();
+      throw new Error("Respuesta no es JSON: " + text);
+    }
+  }
+
+  // --- Función para cargar perfil ---
+  async function loadProfile() {
+    try {
+      const res = await fetch('/api/me', { headers: authHeaders() });
+      if (!res.ok) throw new Error('No autorizado');
+
+      const user = await parseResponse(res);
+      document.getElementById('profileName').textContent = user.nombre || '';
+      document.getElementById('profileBio').textContent = user.biografia || '';
+      document.getElementById('profileImage').src = user.foto || DEFAULT_AVATAR;
+
+      document.getElementById('nombre').value = user.nombre || '';
+      document.getElementById('biografia').value = user.biografia || '';
+    } catch (err) {
+      console.error('Error cargando perfil:', err);
+      Swal.fire('Error', 'No se pudo cargar el perfil', 'error');
+    }
+  }
+
+  // --- Headers dinámicos ---
+  function authHeaders(isFormData = false) {
+    const token = localStorage.getItem('auth_token');
+    const headers = {};
+    if (token) headers['Authorization'] = 'Bearer ' + token;
+    if (!isFormData) headers['Content-Type'] = 'application/json';
+    return headers;
+  }
+
+  // --- Mostrar/Ocultar edición ---
+  editBtn.addEventListener('click', () => {
+    profileEdit.classList.remove('hidden');
+    profileView.classList.add('hidden');
+  });
+
+  document.getElementById('cancelBtn').addEventListener('click', () => {
+    profileEdit.classList.add('hidden');
+    profileView.classList.remove('hidden');
+  });
+
+  // --- Guardar cambios ---
+  profileForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = new FormData(profileForm);
+
+    try {
+      const res = await fetch('/api/profile', {
+        method: 'POST',
+        headers: authHeaders(true),
+        body: form
+      });
+
+      const result = await parseResponse(res);
+
+      if (res.ok) {
+        Swal.fire('Éxito', result.message, 'success');
+        profileEdit.classList.add('hidden');
+        profileView.classList.remove('hidden');
+        loadProfile();
+      } else {
+        Swal.fire('Error', result.error || 'Error actualizando perfil', 'error');
+      }
+    } catch (err) {
+      console.error('Error conexión:', err);
+      Swal.fire('Error', 'Error de conexión con el servidor', 'error');
+    }
+  });
+
+  // --- Inicial ---
+  await loadProfile();
+});
+</script>
+{% endblock %}
