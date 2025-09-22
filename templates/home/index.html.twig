@@ -52,43 +52,8 @@
 {% endblock %}
 
 {% block body %}
-<!-- 🌐 Navbar -->
-<nav class="bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-lg sticky top-0 z-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between h-16 items-center">
-      <a href="/home" class="text-2xl font-extrabold flex items-center animate__animated animate__fadeInLeft">
-        <span class="text-3xl mr-2">🎭</span> 
-        <span class="hidden md:inline">Carnaval de Negros y Blancos</span>
-        <span class="md:hidden">Carnaval</span>
-      </a>
-      <div class="space-x-6 hidden sm:flex">
-        <a href="/" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-home mr-1"></i> Inicio</a>
-        <a href="{{ path('app_user_user') }}" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-user mr-1"></i> Perfil</a>
-        <a href="#calendar" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-calendar-alt mr-1"></i> Eventos</a>
-        <a href="#mapa" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-map-marked-alt mr-1"></i> Mapa</a>
-        <a href="#galeria" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-images mr-1"></i> Galería</a>
-        <a href="#historia" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-history mr-1"></i> Historia</a>
-      </div>
-      <!-- Mobile menu button -->
-      <div class="sm:hidden">
-        <button type="button" class="text-white hover:text-gray-200 focus:outline-none" id="mobile-menu-button">
-          <i class="fas fa-bars text-2xl"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-  <!-- Mobile menu -->
-  <div class="hidden sm:hidden bg-pink-600" id="mobile-menu">
-    <div class="px-2 pt-2 pb-3 space-y-1">
-      <a href="/" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-home mr-2"></i>Inicio</a>
-      <a href="{{ path('app_user_user') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-user mr-2"></i>Perfil</a>
-      <a href="#calendar" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-calendar-alt mr-2"></i>Eventos</a>
-      <a href="#mapa" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-map-marked-alt mr-2"></i>Mapa</a>
-      <a href="#galeria" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-images mr-2"></i>Galería</a>
-      <a href="#historia" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-history mr-2"></i>Historia</a>
-    </div>
-  </div>
-</nav>
+
+{{ include('navbar.html.twig') }}
 
 <!-- 🎉 Hero con contador - Versión Mejorada -->
 <section class="bg-white py-16 md:py-24 relative overflow-hidden">
@@ -354,66 +319,7 @@
   </div>
 </section>
 
-<!-- 📌 Footer -->
-<footer class="gradient-bg text-white pt-16 pb-8">
-  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8">
-    <div>
-      <h3 class="text-lg font-bold mb-4 flex items-center">
-        <span class="text-2xl mr-2">🎭</span> Carnaval de Negros y Blancos
-      </h3>
-      <p class="mt-2 text-sm opacity-90">Patrimonio Cultural de la Humanidad. Una celebración de diversidad, cultura y tradición que une a todos en el sur de Colombia.</p>
-    </div>
-    <div>
-      <h3 class="text-lg font-bold mb-4">Enlaces Rápidos</h3>
-      <ul class="mt-2 space-y-3 text-sm">
-        <li><a href="/" class="opacity-90 hover:opacity-100 transition-opacity duration-300"><i class="fas fa-arrow-right mr-2"></i> Inicio</a></li>
-        <li><a href="#calendar" class="opacity-90 hover:opacity-100 transition-opacity duration-300"><i class="fas fa-arrow-right mr-2"></i> Eventos</a></li>
-        <li><a href="#mapa" class="opacity-90 hover:opacity-100 transition-opacity duration-300"><i class="fas fa-arrow-right mr-2"></i> Mapa</a></li>
-        <li><a href="#galeria" class="opacity-90 hover:opacity-100 transition-opacity duration-300"><i class="fas fa-arrow-right mr-2"></i> Galería</a></li>
-        <li><a href="#historia" class="opacity-90 hover:opacity-100 transition-opacity duration-300"><i class="fas fa-arrow-right mr-2"></i> Historia</a></li>
-      </ul>
-    </div>
-    <div>
-      <h3 class="text-lg font-bold mb-4">Contacto</h3>
-      <ul class="mt-2 space-y-3 text-sm">
-        <li class="flex items-start opacity-90"><i class="fas fa-map-marker-alt mr-3 mt-1"></i> Pasto, Nariño, Colombia</li>
-        <li class="flex items-start opacity-90"><i class="fas fa-phone-alt mr-3 mt-1"></i> +57 (0) 731 2345</li>
-        <li class="flex items-start opacity-90"><i class="fas fa-envelope mr-3 mt-1"></i> info@carnavalpasto.com</li>
-      </ul>
-    </div>
-    <div>
-      <h3 class="text-lg font-bold mb-4">Síguenos</h3>
-      <p class="text-sm opacity-90 mb-4">No te pierdas ninguna novedad sobre el Carnaval</p>
-      <div class="flex gap-4">
-        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors duration-300">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors duration-300">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors duration-300">
-          <i class="fab fa-twitter"></i>
-        </a>
-        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors duration-300">
-          <i class="fab fa-youtube"></i>
-        </a>
-      </div>
-      
-      <div class="mt-6">
-        <h4 class="font-semibold mb-2">Boletín informativo</h4>
-        <div class="flex">
-          <input type="email" placeholder="Tu correo electrónico" class="bg-white/10 border border-white/20 rounded-l-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white/50 w-full">
-          <button class="bg-white text-pink-600 rounded-r-lg px-4 font-bold hover:bg-gray-100 transition-colors duration-300">
-            <i class="fas fa-paper-plane"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="border-t border-white/20 mt-12 pt-6 text-center">
-    <p class="text-sm opacity-80">© 2025 Carnaval de Negros y Blancos - Pasto, Colombia. Todos los derechos reservados.</p>
-  </div>
-</footer>
+{{ include('footer.html.twig') }}
 {% endblock %}
 
 {% block javascripts %}
