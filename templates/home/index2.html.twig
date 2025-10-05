@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+{{dump(app.user.rol.rol)}}
+{% if app.user.rol.rol == "ROLE_ADMIN2" %}
+    <input type="button" value="Editar">
+{%endif%}
+
+<a href="/logout">Salir de la app</a>
+{% endblock %}
+

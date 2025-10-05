@@ -10,22 +10,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class CalendarController extends AbstractController
 {
     #[Route('/api/events', name: 'api_events', methods: ['GET'])]
-    public function events(EventoRepository $repo): JsonResponse
-    {
-        $events = $repo->findAll();
+public function events(EventoRepository $repo): JsonResponse
+{
+    $eventos = $repo->findAll();
 
-        $data = array_map(function($e) {
-            return [
-                'id'          => $e->getId(),
-                'title'       => $e->getTitulo(),
-                'date'         => $e->getFecha()?->format('Y-m-d\TH:i:s'),
-                'description' => $e->getDescripcion(),
-                'ubicacion'   => $e->getUbicacion(),
-            ];
-        }, $events);
+    $data = array_map(function($evento) {
+        return [
+            'id' => $evento->getId(),
+            'titulo' => $evento->getTitulo(),
+            'descripcion' => $evento->getDescripcion(),
+            'fecha' => $evento->getFecha()?->format(\DATE_ATOM), // ISO8601
+            'ubicacion' => $evento->getUbicacion(),
+        ];
+    }, $eventos);
 
-        return $this->json($data);
-    }
+    return new JsonResponse($data);
+}
+
 
     #[Route('/calendar', name: 'app_calendar')]
     public function index()

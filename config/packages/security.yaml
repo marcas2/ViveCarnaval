@@ -13,7 +13,12 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
+        main:
+            form_login:
+                login_path: app_login
+                check_path: app_login
+            logout:
+                path: /logout                
         login:
             pattern: ^/api/login
             stateless: true

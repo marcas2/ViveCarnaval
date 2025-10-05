@@ -15,4 +15,14 @@ final class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+
+    #[Route('/home2', name: 'app_home2')]
+    public function index2(): Response
+    {
+
+        $roleUser = $this->getUser()->getRol()->getRol();
+        return $this->render('home/index2.html.twig', [
+            'role_user' => $roleUser,
+        ]);
+    }    
 }

@@ -53,7 +53,20 @@
 
 {% block body %}
 
+
 {{ include('navbar.html.twig') }}
+
+
+<div class="text-center mt-6 animate__animated animate__fadeIn">
+  <h3 class="text-xl font-semibold text-gray-800">
+    👋 Bienvenido, <span class="text-pink-600">{{ dump(app.user) }}</span>
+  </h3>
+  <p class="mt-2 text-gray-500">
+    Rol actual: <span class="font-semibold text-purple-600"> </span>
+  </p>
+
+
+</div>
 
 <!-- 🎉 Hero con contador - Versión Mejorada -->
 <section class="bg-white py-16 md:py-24 relative overflow-hidden">

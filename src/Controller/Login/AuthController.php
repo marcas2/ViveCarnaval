@@ -10,17 +10,30 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\Login\RolesRepository;
 use App\Repository\Login\UsuariosRepository;
 use App\Entity\Login\Usuarios;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\Response;
+
 
 
 final class AuthController extends AbstractController
 {
-    #[Route('/login/auth', name: 'app_login_auth')]
-    public function indexLogin(): Response
+    #[Route('/login', name: 'app_login')]
+    public function indexLogin(AuthenticationUtils $authenticationUtils): Response
     {
-        return $this->render('login/auth/index.html.twig', [
-            'controller_name' => 'AuthController',
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('login_auth/index.html.twig', [
+           'last_username' => $lastUsername,
+           'error'         => $error,
         ]);
     }
+    #[Route('/logout', name: 'logout', methods: ['GET'])]
+    public function logout(){
+
+    }
+
+    
 
     #[Route('/api/register', name: 'api_register', methods: ['POST'])]
 public function register(Request $request, UserPasswordHasherInterface $passwordHasher,
