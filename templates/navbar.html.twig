@@ -1,4 +1,4 @@
-<!-- 🌐 Navbar -->
+
 <nav class="bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-lg sticky top-0 z-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-16 items-center">
@@ -9,11 +9,11 @@
       </a>
       <div class="space-x-6 hidden sm:flex">
         <a href="{{ path('app_user_user') }}" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-user mr-1"></i> Perfil</a>
-        <a href="#calendar" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-calendar-alt mr-1"></i> Eventos</a>
-        <a href="#mapa" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-map-marked-alt mr-1"></i> Mapa</a>
+        <a href="{{ path('app_events_list') }}" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-calendar-alt mr-1"></i> Eventos</a>
+        <a href="{{ path('app_events_map') }}" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-map-marked-alt mr-1"></i> Mapa</a>
         <a href="#galeria" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-images mr-1"></i> Galería</a>
         <a href="#historia" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-history mr-1"></i> Historia</a>
-        <a href="/" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-home mr-1"></i> Cerrar Sesión</a>
+        <a href="/logout" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-home mr-1"></i> Cerrar Sesión</a>
 
       </div>
       <!-- Mobile menu button -->
@@ -29,8 +29,8 @@
     <div class="px-2 pt-2 pb-3 space-y-1">
       <a href="/" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-home mr-2"></i>Inicio</a>
       <a href="{{ path('app_user_user') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-user mr-2"></i>Perfil</a>
-      <a href="#calendar" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-calendar-alt mr-2"></i>Eventos</a>
-      <a href="#mapa" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-map-marked-alt mr-2"></i>Mapa</a>
+      <a href="{{ path('app_events_list') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-calendar-alt mr-2"></i>Eventos</a>
+      <a href="{{ path('app_events_map') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-map-marked-alt mr-2"></i>Mapa</a>
       <a href="#galeria" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-images mr-2"></i>Galería</a>
       <a href="#historia" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-history mr-2"></i>Historia</a>
     </div>

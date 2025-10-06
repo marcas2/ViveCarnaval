@@ -1,0 +1,448 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/main.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    /* Variables CSS modernas */
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --glass-bg: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.18);
+      --shadow-elegant: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Calendario moderno */
+    .fc {
+      --fc-border-color: rgb(229 231 235 / 0.3);
+      --fc-page-bg-color: transparent;
+      --fc-today-bg-color: rgb(147 197 253 / 0.2);
+      --fc-neutral-bg-color: transparent;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .fc-theme-standard .fc-scrollgrid {
+      border: none;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+
+    .fc-theme-standard td, 
+    .fc-theme-standard th {
+      border-color: rgb(229 231 235 / 0.3);
+    }
+
+    .fc .fc-toolbar {
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .fc .fc-toolbar-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .fc .fc-button {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 0.75rem;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-transform: none;
+    }
+
+    .fc .fc-button:hover {
+      background: var(--primary-gradient);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-elegant);
+    }
+
+    .fc .fc-button-primary:not(:disabled).fc-button-active {
+      background: var(--primary-gradient);
+      border-color: transparent;
+    }
+
+    /* Celdas del calendario */
+    .fc .fc-daygrid-day {
+      transition: all 0.3s ease;
+      border-radius: 0.5rem;
+      margin: 2px;
+    }
+
+    .fc .fc-daygrid-day:hover {
+      background: rgba(147, 197, 253, 0.1);
+      transform: scale(1.02);
+    }
+
+    .fc .fc-daygrid-day.fc-day-today {
+      background: var(--primary-gradient);
+      color: white;
+    }
+
+    .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+      color: white;
+      font-weight: 700;
+    }
+
+    .fc .fc-daygrid-day-number {
+      padding: 0.5rem;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    /* Eventos modernos */
+    .fc-event {
+      border: none;
+      border-radius: 0.75rem;
+      padding: 0.5rem 0.75rem;
+      margin: 0.125rem 0.25rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fc-event::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .fc-event:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .fc-event:hover::before {
+      left: 100%;
+    }
+
+    /* Modal blanco moderno */
+    .modal-overlay {
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+    }
+
+    .modal-container {
+      background: white;
+      border-radius: 2rem;
+      box-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.3);
+      padding: 0;
+      max-width: 42rem;
+      width: 95%;
+      position: relative;
+      overflow: hidden;
+      transform: scale(0.9);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal-container.modal-open {
+      transform: scale(1);
+    }
+
+    .modal-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--primary-gradient);
+    }
+
+    .modal-header {
+      padding: 2rem 2rem 1rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .modal-body {
+      padding: 1.5rem 2rem 2rem;
+    }
+
+    .modal-title {
+      font-size: 1.875rem;
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .meta-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      background: var(--secondary-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.75rem;
+    }
+
+    .modal-description {
+      color: #374151;
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    .modal-image {
+      width: 100%;
+      height: 16rem;
+      object-fit: cover;
+      border-radius: 1rem;
+      margin-top: 1.5rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-image:hover {
+      transform: scale(1.02);
+    }
+
+    .close-button {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+      transition: all 0.3s ease;
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .close-button:hover {
+      background: #fef2f2;
+      color: #ef4444;
+      transform: rotate(90deg);
+      border-color: #fecaca;
+    }
+
+    /* Animaciones */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in-up {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    /* Responsive */
+    @media (min-width: 768px) {
+      .fc .fc-toolbar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+      
+      .fc .fc-toolbar-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+<!-- 📅 Calendario Moderno -->
+<section id="calendarSection" class="py-16 px-4 bg-gradient-to-br from-slate-50 via-blue-50/20 to-purple-50/30 min-h-screen">
+  <div class="max-w-7xl mx-auto">
+    <div class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-6 md:p-8 border border-white/20">
+      <div id="calendar"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 💫 Modal Blanco Moderno -->
+<div id="eventModal" class="fixed inset-0 modal-overlay flex items-center justify-center z-50 p-4 opacity-0 pointer-events-none transition-all duration-500">
+  <div class="modal-container">
+    <button id="closeModal" class="close-button">
+      <i class="fas fa-times text-lg"></i>
+    </button>
+    
+    <div class="modal-header">
+      <h2 id="modalTitle" class="modal-title"></h2>
+      <div class="modal-meta">
+        <div class="meta-item">
+          <div class="meta-icon">
+            <i class="fas fa-calendar"></i>
+          </div>
+          <span id="modalFecha"></span>
+        </div>
+        <div class="meta-item">
+          <div class="meta-icon">
+            <i class="fas fa-tag"></i>
+          </div>
+          <span id="modalTipo"></span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-body">
+      <p id="modalDescripcion" class="modal-description"></p>
+      <div id="modalImageContainer" class="hidden">
+        <img id="modalImagen" class="modal-image" />
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar');
+    const modal = document.getElementById('eventModal');
+    const modalContainer = modal.querySelector('.modal-container');
+    const closeModal = document.getElementById('closeModal');
+
+    const modalTitle = document.getElementById('modalTitle');
+    const modalFecha = document.getElementById('modalFecha');
+    const modalTipo = document.getElementById('modalTipo');
+    const modalDescripcion = document.getElementById('modalDescripcion');
+    const modalImagen = document.getElementById('modalImagen');
+    const modalImageContainer = document.getElementById('modalImageContainer');
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      locale: 'es',
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      events: '/api/events',
+      eventContent: function(arg) {
+        const eventType = arg.event.extendedProps.tipo || 'General';
+        const eventEmoji = getEventEmoji(eventType);
+        
+        return {
+          html: `
+            <div class="fc-event-content flex items-center gap-2">
+              <span class="text-xs">${eventEmoji}</span>
+              <span class="fc-event-title flex-1 truncate">${arg.event.title}</span>
+            </div>
+          `
+        };
+      },
+      eventClick: function(info) {
+        const e = info.event;
+        const ex = e.extendedProps;
+
+        console.log("✅ Evento clickeado:", e);
+
+        modalTitle.textContent = e.title || "Sin título";
+        modalFecha.textContent = e.start.toLocaleDateString('es-CO', { 
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+        modalTipo.textContent = ex.tipo || "General";
+        modalDescripcion.textContent = ex.description || "Sin descripción disponible";
+
+        if (ex.imagen) {
+          modalImagen.src = ex.imagen.startsWith('http') ? ex.imagen : window.location.origin + ex.imagen;
+          modalImageContainer.classList.remove("hidden");
+        } else {
+          modalImageContainer.classList.add("hidden");
+        }
+
+        // 👉 Mostrar modal con animación
+        modal.classList.remove("opacity-0", "pointer-events-none");
+        modal.classList.add("opacity-100");
+        setTimeout(() => {
+          modalContainer.classList.add("modal-open");
+        }, 50);
+        document.body.style.overflow = "hidden";
+      }
+    });
+
+    calendar.render();
+
+    function getEventEmoji(tipo) {
+      const emojiMap = {
+        'Conferencia': '🎤',
+        'Taller': '🔧',
+        'Social': '🎉',
+        'Deportivo': '⚽',
+        'Cultural': '🎭',
+        'Educativo': '📚',
+        'General': '📅'
+      };
+      return emojiMap[tipo] || '📅';
+    }
+
+    function closeModalFn() {
+      modalContainer.classList.remove("modal-open");
+      setTimeout(() => {
+        modal.classList.add("opacity-0", "pointer-events-none");
+        modal.classList.remove("opacity-100");
+        document.body.style.overflow = "";
+      }, 300);
+    }
+
+    closeModal.addEventListener("click", closeModalFn);
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModalFn();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModalFn();
+    });
+  });
+  </script>
+{% endblock %}

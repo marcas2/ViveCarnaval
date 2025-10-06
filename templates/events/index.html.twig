@@ -1,0 +1,534 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Montserrat', sans-serif;
+    }
+    .card-hover {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    }
+    .fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .slide-up {
+        animation: slideUp 0.4s ease-out;
+    }
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .modal-overlay {
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+    }
+    .event-type-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+    .gradient-bg {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+    }
+
+           
+
+</style>
+{% endblock %}
+
+{% block body %}
+{{ include('navbar.html.twig') }}
+
+<div class="min-h-screen gradient-bg p-6">
+    <!-- Header Section -->
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 fade-in">
+            <div class="mb-6 md:mb-0">
+                <h1 class="text-4xl font-bold text-gray-800 mb-2 flex items-center">
+                    <i class="fas fa-calendar-alt text-blue-500 mr-3"></i> 
+                    Eventos
+                </h1>
+                <p class="text-gray-600 max-w-2xl">
+                    Descubre y gestiona todos los eventos disponibles. Filtra por fecha o tipo para encontrar exactamente lo que buscas.
+                </p>
+            </div>
+
+            {% if app.user.rol.rol == "ROLE_ADMIN" %}
+            <button 
+                onclick="openCreateModal()"
+                class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-xl shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 flex items-center group">
+                <i class="fas fa-plus-circle mr-2 group-hover:scale-110 transition-transform"></i>
+                Registrar nuevo evento
+            </button>
+            {% endif %}
+        </div>
+
+        <!-- Filters Section -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8 slide-up">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                <i class="fas fa-filter text-blue-500 mr-2"></i>
+                Filtros de búsqueda
+            </h2>
+            <form method="GET" action="{{ path('app_events_list') }}" class="flex flex-col md:flex-row gap-4 items-end">
+                <div class="flex-1">
+                    <label class="block text-gray-700 text-sm font-medium mb-1">Fecha y hora del evento</label>
+                    <div class="relative">
+                        <i class="fas fa-calendar absolute left-3 top-3 text-gray-400"></i>
+                        <!-- Cambiado a datetime-local para incluir hora -->
+                        <input type="datetime-local" name="fecha" value="{{ fecha_filtro }}" class="border border-gray-200 rounded-xl p-3 pl-10 w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                    </div>
+                </div>
+
+                <div class="flex-1">
+                    <label class="block text-gray-700 text-sm font-medium mb-1">Tipo de evento</label>
+                    <div class="relative">
+                        <i class="fas fa-tag absolute left-3 top-3 text-gray-400"></i>
+                        <select name="tipo" class="border border-gray-200 rounded-xl p-3 pl-10 w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition appearance-none">
+                            <option value="">Todos los tipos</option>
+                            <option value="Desfile" {% if tipo_filtro == 'Desfile' %}selected{% endif %}>Desfile</option>
+                            <option value="Concierto" {% if tipo_filtro == 'Concierto' %}selected{% endif %}>Concierto</option>
+                            <option value="Taller" {% if tipo_filtro == 'Taller' %}selected{% endif %}>Taller</option>
+                            <option value="Feria" {% if tipo_filtro == 'Feria' %}selected{% endif %}>Feria</option>
+                        </select>
+                        <i class="fas fa-chevron-down absolute right-3 top-3 text-gray-400 pointer-events-none"></i>
+                    </div>
+                </div>
+
+                <div class="flex gap-3">
+                    <button type="submit" class="bg-blue-500 text-white px-5 py-3 rounded-xl hover:bg-blue-600 transition flex items-center shadow-md">
+                        <i class="fas fa-search mr-2"></i>
+                        Aplicar filtros
+                    </button>
+
+                    <a href="{{ path('app_events_list') }}" class="text-gray-600 px-5 py-3 rounded-xl border border-gray-200 hover:bg-gray-50 transition flex items-center">
+                        <i class="fas fa-times mr-2"></i>
+                        Limpiar
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Events Counter -->
+        {% if eventos|length > 0 %}
+        <div class="mb-6 slide-up">
+            <p class="text-gray-600">
+                <span class="font-semibold text-blue-600">{{ eventos|length }}</span> 
+                evento{{ eventos|length > 1 ? 's' : '' }} encontrado{{ eventos|length > 1 ? 's' : '' }}
+            </p>
+        </div>
+        {% endif %}
+
+        <!-- Events Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for e in eventos %}
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100 card-hover fade-in" style="animation-delay: {{ loop.index * 0.1 }}s">
+                    <!-- Event Image -->
+                    <div class="relative overflow-hidden">
+                        {% if e.imagen %}
+                            <img src="{{ asset('uploads/events/' ~ e.imagen) }}" alt="{{ e.titulo }}" class="w-full h-52 object-cover transition-transform duration-500 hover:scale-105">
+                        {% else %}
+                            <div class="w-full h-52 bg-gradient-to-r from-blue-50 to-indigo-100 flex items-center justify-center">
+                                <i class="fas fa-calendar-day text-4xl text-blue-300"></i>
+                            </div>
+                        {% endif %}
+                        
+                        <!-- Event Type Badge -->
+                        {% if e.tipo %}
+                        <div class="absolute top-4 right-4">
+                            {% if e.tipo == 'Desfile' %}
+                                <span class="event-type-badge bg-purple-100 text-purple-800">
+                                    <i class="fas fa-mask mr-1"></i> {{ e.tipo }}
+                                </span>
+                            {% elseif e.tipo == 'Concierto' %}
+                                <span class="event-type-badge bg-pink-100 text-pink-800">
+                                    <i class="fas fa-music mr-1"></i> {{ e.tipo }}
+                                </span>
+                            {% elseif e.tipo == 'Taller' %}
+                                <span class="event-type-badge bg-green-100 text-green-800">
+                                    <i class="fas fa-tools mr-1"></i> {{ e.tipo }}
+                                </span>
+                            {% elseif e.tipo == 'Feria' %}
+                                <span class="event-type-badge bg-amber-100 text-amber-800">
+                                    <i class="fas fa-store mr-1"></i> {{ e.tipo }}
+                                </span>
+                            {% else %}
+                                <span class="event-type-badge bg-gray-100 text-gray-800">
+                                    <i class="fas fa-star mr-1"></i> {{ e.tipo }}
+                                </span>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Event Content -->
+                    <div class="p-5">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2 line-clamp-2">{{ e.titulo }}</h3>
+                        
+                        <div class="flex items-center text-gray-600 mb-3">
+                            <i class="far fa-clock text-blue-500 mr-2"></i>
+                            <span class="text-sm">{{ e.fecha|date('d M Y, H:i') }}</span>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-4 text-sm line-clamp-3">
+                            {{ e.descripcion|default('Este evento no tiene descripción disponible.') }}
+                        </p>
+                        
+                        <div class="flex items-center text-gray-500 mb-4">
+                            <i class="fas fa-map-marker-alt text-red-400 mr-2"></i>
+                            <span class="text-xs">📍 {{ e.latitud }}, {{ e.longitud }}</span>
+                        </div>
+
+                        <!-- Admin Actions -->
+                        {% if app.user.rol.rol == "ROLE_ADMIN" %}
+                        <div class="flex gap-2 pt-4 border-t border-gray-100">
+                            <button 
+                                onclick="openEditModal({{ e.id }}, '{{ e.titulo }}', '{{ e.descripcion|e('js') }}', '{{ e.fecha|date('Y-m-d\\TH:i') }}', '{{ e.latitud }}', '{{ e.longitud }}', '{{ e.imagen }}', '{{ e.tipo }}')" 
+                                class="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 text-white px-3 py-2 rounded-lg hover:from-amber-600 hover:to-amber-700 transition flex items-center justify-center">
+                                <i class="fas fa-edit mr-2"></i>
+                                Editar
+                            </button>
+                            <button 
+                                onclick="confirmDelete({{ e.id }})"
+                                class="flex-1 bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-2 rounded-lg hover:from-red-600 hover:to-red-700 transition flex items-center justify-center">
+                                <i class="fas fa-trash-alt mr-2"></i>
+                                Eliminar
+                            </button>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% else %}
+                <!-- Empty State -->
+                <div class="col-span-full text-center py-16 fade-in">
+                    <div class="max-w-md mx-auto">
+                        <div class="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-calendar-times text-3xl text-blue-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-2">No se encontraron eventos</h3>
+                        <p class="text-gray-500 mb-6">
+                            No hay eventos que coincidan con los filtros seleccionados. 
+                            Intenta ajustar los criterios de búsqueda.
+                        </p>
+                        {% if app.user.rol.rol == "ROLE_ADMIN" %}
+                        <button 
+                            onclick="openCreateModal()"
+                            class="bg-blue-500 text-white px-5 py-2.5 rounded-lg hover:bg-blue-600 transition inline-flex items-center">
+                            <i class="fas fa-plus mr-2"></i>
+                            Crear primer evento
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal CREAR -->
+<div id="createModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto slide-up">
+        <div class="p-6 border-b border-gray-100">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-plus-circle text-blue-500 mr-2"></i>
+                    Registrar nuevo evento
+                </h2>
+                <button onclick="closeCreateModal()" class="text-gray-400 hover:text-gray-600 transition">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+            <p class="text-gray-600 text-sm mt-1">
+                Completa la información para crear un nuevo evento
+            </p>
+        </div>
+        
+        <form 
+            action="{{ path('app_events_create') }}" 
+            method="POST" 
+            enctype="multipart/form-data" 
+            onsubmit="return validarCoordenadas(this)"
+            class="p-6 space-y-4">
+            
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Título del evento *</label>
+                <input name="titulo" class="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Ej: Festival de Música 2023" required>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">Fecha y hora *</label>
+                    <input name="fecha" type="datetime-local" class="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" required>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">Tipo *</label>
+                    <select name="tipo" class="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition appearance-none" required>
+                        <option value="">Seleccionar tipo</option>
+                        <option value="Desfile">Desfile</option>
+                        <option value="Concierto">Concierto</option>
+                        <option value="Taller">Taller</option>
+                        <option value="Feria">Feria</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Descripción</label>
+                <textarea name="descripcion" rows="3" class="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Describe el evento..."></textarea>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Ubicación (Coordenadas)</label>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-600 text-sm mb-1">Latitud *</label>
+                        <input name="latitud" step="any" type="number" class="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Ej: 40.4168" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-600 text-sm mb-1">Longitud *</label>
+                        <input name="longitud" step="any" type="number" class="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Ej: -3.7038" required>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">
+                    Las coordenadas deben estar entre -90 y 90 para latitud, y -180 y 180 para longitud.
+                </p>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Imagen del evento</label>
+                <div class="border-2 border-dashed border-gray-200 rounded-xl p-4 text-center hover:border-blue-400 transition cursor-pointer" onclick="document.querySelector('input[name=imagen]').click()">
+                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-300 mb-2"></i>
+                    <p class="text-gray-500">Haz clic para subir una imagen</p>
+                    <p class="text-gray-400 text-sm">PNG, JPG hasta 5MB</p>
+                    <input name="imagen" type="file" accept="image/*" class="hidden">
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4">
+                <button type="button" onclick="closeCreateModal()" class="px-5 py-2.5 text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition flex items-center">
+                    <i class="fas fa-times mr-2"></i>
+                    Cancelar
+                </button>
+                <button type="submit" class="px-5 py-2.5 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition flex items-center shadow-md">
+                    <i class="fas fa-save mr-2"></i>
+                    Guardar evento
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal EDITAR -->
+<div id="editModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto slide-up">
+        <div class="p-6 border-b border-gray-100">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-edit text-amber-500 mr-2"></i>
+                    Editar evento
+                </h2>
+                <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600 transition">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+            <p class="text-gray-600 text-sm mt-1">
+                Modifica la información del evento seleccionado
+            </p>
+        </div>
+        
+        <form id="editForm" method="POST" enctype="multipart/form-data" class="p-6 space-y-4">
+            <input type="hidden" id="editId">
+            
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Título del evento *</label>
+                <input id="editTitulo" name="titulo" class="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" required>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">Fecha y hora *</label>
+                    <input id="editFecha" name="fecha" type="datetime-local" class="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" required>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">Tipo *</label>
+                    <select id="editTipo" name="tipo" class="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition appearance-none" required>
+                        <option value="">Seleccionar tipo</option>
+                        <option value="Desfile">Desfile</option>
+                        <option value="Concierto">Concierto</option>
+                        <option value="Taller">Taller</option>
+                        <option value="Feria">Feria</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Descripción</label>
+                <textarea id="editDescripcion" name="descripcion" rows="3" class="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></textarea>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Ubicación (Coordenadas)</label>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-600 text-sm mb-1">Latitud *</label>
+                        <input id="editLatitud" name="latitud" step="any" type="number" class="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-600 text-sm mb-1">Longitud *</label>
+                        <input id="editLongitud" name="longitud" step="any" type="number" class="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Cambiar imagen</label>
+                <div class="border-2 border-dashed border-gray-200 rounded-xl p-4 text-center hover:border-blue-400 transition cursor-pointer" onclick="document.querySelector('#editForm input[name=imagen]').click()">
+                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-300 mb-2"></i>
+                    <p class="text-gray-500">Haz clic para cambiar la imagen</p>
+                    <input name="imagen" type="file" accept="image/*" class="hidden">
+                </div>
+            </div>
+            
+            <div class="pt-2">
+                <label class="block text-gray-700 font-medium mb-2">Imagen actual</label>
+                <img id="editPreview" src="" alt="Vista previa" class="w-32 h-32 object-cover rounded-xl border shadow-sm">
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4">
+                <button type="button" onclick="closeEditModal()" class="px-5 py-2.5 text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition flex items-center">
+                    <i class="fas fa-times mr-2"></i>
+                    Cancelar
+                </button>
+                <button type="submit" class="px-5 py-2.5 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition flex items-center shadow-md">
+                    <i class="fas fa-save mr-2"></i>
+                    Guardar cambios
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{ include('footer.html.twig') }}
+
+<script>
+function validarCoordenadas(form) {
+    const lat = parseFloat(form.latitud.value);
+    const lng = parseFloat(form.longitud.value);
+    if (isNaN(lat) || isNaN(lng)) { 
+        Swal.fire({
+            icon: 'error',
+            title: 'Error en coordenadas',
+            text: 'Las coordenadas deben ser valores numéricos válidos.',
+            confirmButtonColor: '#3b82f6'
+        });
+        return false; 
+    }
+    if (lat < -90 || lat > 90) { 
+        Swal.fire({
+            icon: 'error',
+            title: 'Latitud inválida',
+            text: 'La latitud debe estar entre -90 y 90 grados.',
+            confirmButtonColor: '#3b82f6'
+        });
+        return false; 
+    }
+    if (lng < -180 || lng > 180) { 
+        Swal.fire({
+            icon: 'error',
+            title: 'Longitud inválida',
+            text: 'La longitud debe estar entre -180 y 180 grados.',
+            confirmButtonColor: '#3b82f6'
+        });
+        return false; 
+    }
+    return true;
+}
+
+function openCreateModal() { 
+    document.getElementById('createModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCreateModal() { 
+    document.getElementById('createModal').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+function openEditModal(id, titulo, descripcion, fecha, latitud, longitud, imagen, tipo) {
+    document.getElementById('editModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    
+    document.getElementById('editId').value = id;
+    document.getElementById('editTitulo').value = titulo;
+    document.getElementById('editDescripcion').value = descripcion;
+    document.getElementById('editFecha').value = fecha;
+    document.getElementById('editLatitud').value = latitud;
+    document.getElementById('editLongitud').value = longitud;
+    document.getElementById('editTipo').value = tipo;
+    document.getElementById('editForm').action = '/events/edit/' + id;
+
+    const preview = document.getElementById('editPreview');
+    preview.src = imagen ? '/uploads/events/' + imagen : 'https://via.placeholder.com/150?text=Sin+Imagen';
+}
+
+function closeEditModal() { 
+    document.getElementById('editModal').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+function confirmDelete(id) {
+    Swal.fire({
+        title: '¿Eliminar evento?',
+        text: 'Esta acción no se puede deshacer y el evento se perderá permanentemente.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true
+    }).then(result => {
+        if (result.isConfirmed) {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/events/delete/' + id;
+            document.body.appendChild(form);
+            form.submit();
+        }
+    });
+}
+
+// Cerrar modales al hacer clic fuera
+document.addEventListener('click', function(event) {
+    const createModal = document.getElementById('createModal');
+    const editModal = document.getElementById('editModal');
+    
+    if (event.target === createModal) {
+        closeCreateModal();
+    }
+    
+    if (event.target === editModal) {
+        closeEditModal();
+    }
+});
+</script>
+{% endblock %}

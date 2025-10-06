@@ -6,6 +6,7 @@
 parameters:
     app.upload_dir: '%kernel.project_dir%/public/uploads/avatars'
     app.upload_uri: '/uploads/avatars'
+    images_directory: '%kernel.project_dir%/public/uploads/events'
 
 services:
     _defaults:

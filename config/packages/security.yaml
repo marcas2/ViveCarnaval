@@ -25,9 +25,10 @@ security:
             provider: usuarios_provider
             json_login:
                 check_path: /api/login
-                username_path: correo
-                password_path: contrasena
+                username_path: _username
+                password_path: _password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
                 # failure_handler se puede eliminar
                 # no se requiere entry_point
 

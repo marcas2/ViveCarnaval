@@ -1,54 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/main.min.css" rel="stylesheet">
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Animate.css -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      font-family: 'Montserrat', sans-serif;
-    }
-    .fc {
-      font-family: 'Poppins', sans-serif;
-    }
-    .card-hover {
-      transition: all 0.3s ease;
-    }
-    .card-hover:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
-    .countdown-box {
-      transition: transform 0.3s ease;
-    }
-    .countdown-box:hover {
-      transform: scale(1.05);
-    }
-    .floating {
-      animation: float 6s ease-in-out infinite;
-    }
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-15px); }
-      100% { transform: translateY(0px); }
-    }
-    .gradient-bg {
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-    }
-    .hero-pattern {
-      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f472b6' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
-  </style>
+          <style>
+            body {
+            font-family: 'Poppins', sans-serif;
+            }
+            h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            }
+            .fc {
+            font-family: 'Poppins', sans-serif;
+            }
+            .card-hover {
+            transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .countdown-box {
+            transition: transform 0.3s ease;
+            }
+            .countdown-box:hover {
+            transform: scale(1.05);
+            }
+            .floating {
+            animation: float 6s ease-in-out infinite;
+            }
+            @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+            }
+            .gradient-bg {
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            }
+            .hero-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f472b6' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            }
+        </style>
+  
 {% endblock %}
 
 {% block body %}
@@ -56,17 +47,6 @@
 
 {{ include('navbar.html.twig') }}
 
-
-<div class="text-center mt-6 animate__animated animate__fadeIn">
-  <h3 class="text-xl font-semibold text-gray-800">
-    👋 Bienvenido, <span class="text-pink-600">{{ dump(app.user) }}</span>
-  </h3>
-  <p class="mt-2 text-gray-500">
-    Rol actual: <span class="font-semibold text-purple-600"> </span>
-  </p>
-
-
-</div>
 
 <!-- 🎉 Hero con contador - Versión Mejorada -->
 <section class="bg-white py-16 md:py-24 relative overflow-hidden">
@@ -146,14 +126,6 @@
       </a>
     </div>
   </div>
-
-  <!-- Elementos flotantes decorativos -->
-  <div class="absolute bottom-10 left-10 w-6 h-6 rounded-full bg-pink-300 opacity-30 animate-pulse"></div>
-  <div class="absolute top-20 right-20 w-8 h-8 rounded-full bg-purple-300 opacity-40 animate-pulse delay-1000"></div>
-  <div class="absolute top-1/2 left-20 w-4 h-4 rounded-full bg-pink-400 opacity-50 animate-pulse delay-500"></div>
-  <div class="absolute bottom-1/3 right-32 w-5 h-5 rounded-full bg-purple-400 opacity-40 animate-pulse delay-1500"></div>
-</section>
-
 <!-- Sección de información -->
 <section class="py-16 bg-gray-50">
   <div class="max-w-6xl mx-auto px-4">
@@ -187,11 +159,9 @@
   </div>
 </section>
 
-<!-- Contenido principal con calendario y cards -->
-<section class="py-16 bg-white" id="calendar-section">
-  <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <!-- Card del calendario -->
-    <div class="lg:col-span-2">
+    <!-- Contenido principal con calendario y cards -->
+    <section class="py-16 bg-white" id="calendar-section">
+    <div class="max-w-6xl mx-auto px-4">
       <div class="bg-white shadow-xl rounded-2xl p-6 card-hover">
         <div class="flex items-center mb-6">
           <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center text-white text-xl mr-4">
@@ -199,12 +169,11 @@
           </div>
           <h2 class="text-2xl font-bold text-gray-800">Calendario del Carnaval</h2>
         </div>
-        <div id="calendar" class="rounded-xl overflow-hidden"></div>
-      </div>
-    </div>
+        {{ include('calendar/index.html.twig') }}
+    
 
     <!-- Cards informativos -->
-    <div class="space-y-6">
+    <div class="flex flex-col md:flex-row gap-6">
       <div class="bg-white shadow-xl rounded-2xl p-6 card-hover">
         <div class="flex items-center mb-4">
           <div class="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 text-lg mr-3">
@@ -274,159 +243,79 @@
         </ul>
       </div>
     </div>
-  </div>
+    </div></div>
 </section>
 
-<!-- Sección Mapa -->
-<section class="py-16 bg-gray-50" id="mapa">
-  <div class="max-w-6xl mx-auto px-4">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold text-gray-800 mb-4">Ubicación del Carnaval</h2>
-      <p class="text-gray-600 max-w-2xl mx-auto">El Carnaval se celebra principalmente en el centro de Pasto, Nariño, donde las calles se transforman en escenarios de alegría y color.</p>
-    </div>
-    
-    <div class="bg-white rounded-2xl shadow-xl overflow-hidden card-hover">
-      <div class="h-96 bg-gray-200 flex items-center justify-center">
-        <div class="text-center p-6">
-          <i class="fas fa-map-marked-alt text-5xl text-pink-500 mb-4"></i>
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">Mapa Interactivo</h3>
-          <p class="text-gray-600">Aquí se cargará el mapa con los principales puntos de interés del Carnaval</p>
-          <button class="mt-4 bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-600 transition-colors duration-300">
-            Ver mapa completo
-          </button>
-        </div>
-      </div>
-    </div>
-    
-    <div class="grid md:grid-cols-3 gap-6 mt-12">
-      <div class="bg-white p-6 rounded-2xl shadow-lg card-hover">
-        <div class="flex items-center mb-4">
-          <div class="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 text-xl mr-4">
-            <i class="fas fa-walking"></i>
-          </div>
-          <h3 class="text-lg font-semibold">Cómo llegar</h3>
-        </div>
-        <p class="text-gray-600">Pasto cuenta con el Aeropuerto Antonio Nariño y una terminal de buses que conecta con las principales ciudades de Colombia.</p>
-      </div>
-      
-      <div class="bg-white p-6 rounded-2xl shadow-lg card-hover">
-        <div class="flex items-center mb-4">
-          <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 text-xl mr-4">
-            <i class="fas fa-hotel"></i>
-          </div>
-          <h3 class="text-lg font-semibold">Hospedaje</h3>
-        </div>
-        <p class="text-gray-600">Te recomendamos reservar con anticipación ya que durante el Carnaval la demanda de alojamiento es muy alta.</p>
-      </div>
-      
-      <div class="bg-white p-6 rounded-2xl shadow-lg card-hover">
-        <div class="flex items-center mb-4">
-          <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl mr-4">
-            <i class="fas fa-info-circle"></i>
-          </div>
-          <h3 class="text-lg font-semibold">Recomendaciones</h3>
-        </div>
-        <p class="text-gray-600">Lleva ropa cómoda, protector solar y mucha energía para disfrutar de todos los eventos del Carnaval.</p>
-      </div>
-    </div>
-  </div>
+
+  <!-- Elementos flotantes decorativos -->
+  <div class="absolute bottom-10 left-10 w-6 h-6 rounded-full bg-pink-300 opacity-30 animate-pulse"></div>
+  <div class="absolute top-20 right-20 w-8 h-8 rounded-full bg-purple-300 opacity-40 animate-pulse delay-1000"></div>
+  <div class="absolute top-1/2 left-20 w-4 h-4 rounded-full bg-pink-400 opacity-50 animate-pulse delay-500"></div>
+  <div class="absolute bottom-1/3 right-32 w-5 h-5 rounded-full bg-purple-400 opacity-40 animate-pulse delay-1500"></div>
 </section>
+
+
+{% block javascripts %}
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+    const countdownEl = document.getElementById("countdown");
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+
+    try {
+        const response = await fetch("/api/countdown");
+        const data = await response.json();
+
+        if (data.error) {
+            countdownEl.innerHTML = `<p class="text-red-500 font-semibold">${data.error}</p>`;
+            return;
+        }
+
+        const startDate = new Date(data.fechaInicio).getTime();
+
+        const updateCountdown = () => {
+            const now = new Date().getTime();
+            const distance = startDate - now;
+
+            if (distance <= 0) {
+                clearInterval(interval);
+
+                // 🔥 Mensaje final animado y visual
+                countdownEl.innerHTML = `
+                    <div class="text-center py-6 animate-bounce">
+                        <h3 class="text-4xl font-bold text-pink-600">🎉 ${data.mensaje ?? "¡El Carnaval ha comenzado!"}</h3>
+                        <p class="text-gray-700 mt-2 text-lg">¡Disfruta de la fiesta! 💃🕺</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            daysEl.textContent = days;
+            hoursEl.textContent = hours;
+            minutesEl.textContent = minutes;
+            secondsEl.textContent = seconds;
+        };
+
+        updateCountdown();
+        const interval = setInterval(updateCountdown, 1000);
+
+    } catch (err) {
+        countdownEl.innerHTML = `<p class="text-red-500 font-semibold">Error al cargar el contador</p>`;
+        console.error(err);
+    }
+});
+</script>
+
+{% endblock %}
 
 {{ include('footer.html.twig') }}
 {% endblock %}
 
-{% block javascripts %}
-  {{ parent() }}
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-  <script defer>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Menú móvil
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    
-    if (mobileMenuButton && mobileMenu) {
-      mobileMenuButton.addEventListener('click', function() {
-        mobileMenu.classList.toggle('hidden');
-      });
-    }
 
-    // === Countdown ===
-    async function initCountdown() {
-      try {
-        const res = await fetch('/api/countdown');
-        const json = await res.json();
-
-        if (!res.ok || !json.start) return;
-
-        const start = new Date(json.start);
-
-        function update() {
-          const now = new Date();
-          const diff = start - now;
-
-          if (diff <= 0) {
-            document.getElementById('countdown').innerHTML =
-              '<div class="col-span-4 bg-green-500/20 backdrop-blur-sm text-white rounded-2xl p-8 text-center"><p class="text-2xl font-bold">¡El carnaval ha comenzado! 🎊</p><p class="mt-2">Disfruta de esta gran celebración</p></div>';
-            clearInterval(interval);
-            return;
-          }
-
-          document.getElementById('days').textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
-          document.getElementById('hours').textContent = Math.floor((diff / (1000 * 60 * 60)) % 24).toString().padStart(2, '0');
-          document.getElementById('minutes').textContent = Math.floor((diff / (1000 * 60)) % 60).toString().padStart(2, '0');
-          document.getElementById('seconds').textContent = Math.floor((diff / 1000) % 60).toString().padStart(2, '0');
-        }
-
-        update();
-        const interval = setInterval(update, 1000);
-      } catch (err) {
-        console.error('Error cargando contador', err);
-      }
-    }
-
-    initCountdown();
-
-    // === FullCalendar ===
-    var calendarEl = document.getElementById('calendar');
-    if (calendarEl) {
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'es',
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
-        buttonText: {
-          today: 'Hoy',
-          month: 'Mes',
-          week: 'Semana',
-          day: 'Día'
-        },
-        events: '/api/events',
-        eventColor: '#ec4899',
-        eventDisplay: 'block'
-      });
-      calendar.render();
-    }
-    
-    // Animación de elementos al hacer scroll
-    const animateOnScroll = function() {
-      const elements = document.querySelectorAll('.card-hover, .countdown-box');
-      
-      elements.forEach(element => {
-        const position = element.getBoundingClientRect().top;
-        const screenPosition = window.innerHeight / 1.3;
-        
-        if (position < screenPosition) {
-          element.classList.add('animate__animated', 'animate__fadeInUp');
-        }
-      });
-    };
-    
-    window.addEventListener('scroll', animateOnScroll);
-    // Ejecutar una vez al cargar
-    setTimeout(animateOnScroll, 500);
-  });
-  </script>
-{% endblock %}

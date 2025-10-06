@@ -1,28 +1,30 @@
 <?php
+
 namespace App\Controller\Countdown;
 
+use App\Entity\ContadorRegresivo;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 
 class CountdownController extends AbstractController
 {
     #[Route('/api/countdown', name: 'api_countdown', methods: ['GET'])]
-    public function countdown(): JsonResponse
+    public function countdown(EntityManagerInterface $em): JsonResponse
     {
-        // Lee la env de manera robusta
-        $start = $_ENV['CARNIVAL_START'] ?? $_SERVER['CARNIVAL_START'] ?? getenv('CARNIVAL_START') ?: null;
+        $contador = $em->getRepository(ContadorRegresivo::class)->findOneBy([], ['id' => 'DESC']); // último registro
 
-        if (!$start) {
-            return new JsonResponse(['error' => 'Start date not configured'], 500);
+        if (!$contador || !$contador->getFechaInicioCarnaval()) {
+            return new JsonResponse(['error' => 'No hay fecha configurada'], 404);
         }
 
-        // valida y normaliza la fecha a formato ISO8601 (DATE_ATOM)
-        try {
-            $dt = new \DateTimeImmutable($start);
-            return new JsonResponse(['start' => $dt->format(\DATE_ATOM)]);
-        } catch (\Throwable $e) {
-            return new JsonResponse(['error' => 'Invalid start date: ' . $e->getMessage()], 500);
-        }
+        $fechaInicio = $contador->getFechaInicioCarnaval();
+        $mensaje = $contador->getMensaje() ?? '¡El Carnaval está por comenzar! 🎉';
+
+        return new JsonResponse([
+            'fechaInicio' => $fechaInicio->format(\DateTimeInterface::ATOM),
+            'mensaje' => $mensaje,
+        ]);
     }
 }

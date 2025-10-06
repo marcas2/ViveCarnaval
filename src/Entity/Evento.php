@@ -21,8 +21,16 @@ class Evento
     #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $fecha = null;
 
+    #[ORM\Column(type: 'float', nullable: true)]
+    private ?float $latitud = null;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    private ?float $longitud = null;
+
     #[ORM\Column(length:255, nullable:true)]
-    private ?string $ubicacion = null;
+    private ?string $imagen = null;
+    #[ORM\Column(length:100, nullable:true)]
+    private ?string $tipo = null;
 
     public function getId(): ?int
     {
@@ -64,16 +72,44 @@ class Evento
 
         return $this;
     }
-
-    public function getUbicacion(): ?string
-    {
-        return $this->ubicacion;
+    public function getLatitud(): ?float 
+    { 
+        return $this->latitud; 
+    }
+    public function setLatitud(?float $latitud): self 
+    { 
+        $this->latitud = $latitud; return $this; 
     }
 
-    public function setUbicacion(?string $ubicacion): self
+    public function getLongitud(): ?float 
+    { 
+        return $this->longitud; 
+    }
+    public function setLongitud(?float $longitud): self 
+    { 
+        $this->longitud = $longitud; 
+        return $this;
+    }
+    
+    public function getImagen(): ?string
     {
-        $this->ubicacion = $ubicacion;
+        return $this->imagen;
+    }
 
+    public function setImagen(?string $imagen): self
+    {
+        $this->imagen = $imagen;
+        return $this;
+    }
+    
+    public function getTipo(): ?string
+    {
+        return $this->tipo;
+    }
+
+    public function setTipo(?string $tipo): self
+    {
+        $this->tipo = $tipo;
         return $this;
     }
 
