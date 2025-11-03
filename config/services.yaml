@@ -7,6 +7,8 @@ parameters:
     app.upload_dir: '%kernel.project_dir%/public/uploads/avatars'
     app.upload_uri: '/uploads/avatars'
     images_directory: '%kernel.project_dir%/public/uploads/events'
+    recuerdos_directory: '%kernel.project_dir%/public/uploads/recuerdos'
+    
 
 services:
     _defaults:

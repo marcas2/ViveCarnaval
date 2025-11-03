@@ -1,0 +1,425 @@
+ body {
+            font-family: 'Poppins', sans-serif;
+            }
+            h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            }
+            .fc {
+            font-family: 'Poppins', sans-serif;
+            }
+            .card-hover {
+            transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .countdown-box {
+            transition: transform 0.3s ease;
+            }
+            .countdown-box:hover {
+            transform: scale(1.05);
+            }
+            .floating {
+            animation: float 6s ease-in-out infinite;
+            }
+            @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+            }
+            .gradient-bg {
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            }
+            .hero-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f472b6' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            }
+                /* Variables CSS modernas */
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --glass-bg: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.18);
+      --shadow-elegant: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+/* 🎭 Calendario estilo Vive Carnaval (fucsia + morado) */
+.fc {
+  --fc-border-color: rgba(233, 30, 99, 0.25);
+  --fc-page-bg-color: transparent;
+  --fc-today-bg-color: rgba(233, 30, 99, 0.15);
+  --fc-neutral-bg-color: transparent;
+  --primary-gradient: linear-gradient(135deg, #ff0099, #9b59b6);
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.25);
+  --shadow-elegant: 0 6px 20px rgba(155, 89, 182, 0.4);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Marco principal */
+.fc-theme-standard .fc-scrollgrid {
+  border: none;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+/* Bordes */
+.fc-theme-standard td,
+.fc-theme-standard th {
+  border-color: rgba(233, 30, 99, 0.25);
+}
+
+/* Encabezado difuminado */
+.fc .fc-toolbar {
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Título con gradiente carnaval */
+.fc .fc-toolbar-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Botones */
+.fc .fc-button {
+  background: var(--primary-gradient);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  color: white;
+  transition: all 0.3s ease;
+  text-transform: none;
+}
+
+.fc .fc-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-elegant);
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+  background: var(--primary-gradient);
+  border-color: transparent;
+}
+
+/* Días del calendario */
+.fc .fc-daygrid-day {
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+  margin: 2px;
+}
+
+.fc .fc-daygrid-day:hover {
+  background: rgba(233, 30, 99, 0.08);
+  transform: scale(1.02);
+}
+
+/* Día actual destacado */
+.fc .fc-daygrid-day.fc-day-today {
+  background: var(--primary-gradient);
+  color: white;
+}
+
+.fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+  color: white;
+  font-weight: 700;
+}
+
+.fc .fc-daygrid-day-number {
+  padding: 0.5rem;
+  font-weight: 600;
+  color: #444;
+}
+
+/* Eventos con estilo fucsia-morado */
+.fc-event {
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  margin: 0.125rem 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #ff0099, #9b59b6);
+  box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.fc-event::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.fc-event:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(233, 30, 99, 0.4);
+}
+
+.fc-event:hover::before {
+  left: 100%;
+}
+
+
+    /* Modal blanco moderno */
+    .modal-overlay {
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+    }
+
+    .modal-container {
+      background: white;
+      border-radius: 2rem;
+      box-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.3);
+      padding: 0;
+      max-width: 42rem;
+      width: 95%;
+      position: relative;
+      overflow: hidden;
+      transform: scale(0.9);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal-container.modal-open {
+      transform: scale(1);
+    }
+
+    .modal-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--primary-gradient);
+    }
+
+    .modal-header {
+      padding: 2rem 2rem 1rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .modal-body {
+      padding: 1.5rem 2rem 2rem;
+    }
+
+    .modal-title {
+      font-size: 1.875rem;
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .meta-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      background: var(--secondary-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.75rem;
+    }
+
+    .modal-description {
+      color: #374151;
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    .modal-image {
+      width: 100%;
+      height: 16rem;
+      object-fit: cover;
+      border-radius: 1rem;
+      margin-top: 1.5rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-image:hover {
+      transform: scale(1.02);
+    }
+
+    .close-button {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+      transition: all 0.3s ease;
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .close-button:hover {
+      background: #fef2f2;
+      color: #ef4444;
+      transform: rotate(90deg);
+      border-color: #fecaca;
+    }
+
+    /* Animaciones */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in-up {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    /* Responsive */
+    @media (min-width: 768px) {
+      .fc .fc-toolbar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+      
+      .fc .fc-toolbar-title {
+        font-size: 2rem;
+      }
+    }
+    /* 🎉 Estilos para el contador regresivo estilo carnaval */
+#countdown {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  margin-top: 2rem;
+}
+
+.countdown-box {
+  width: 120px;
+  height: 120px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.countdown-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* 🎭 Ajuste de espaciado del contador */
+#countdown {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px; /* 🔸 más compacto */
+  margin-top: 2rem;
+}
+
+/* Cuadros del contador */
+.countdown-box {
+  width: 100px; /* 🔸 más pequeño */
+  height: 100px;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.countdown-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Colores individuales */
+.countdown-box:nth-child(1) {
+  background: linear-gradient(145deg, #ff007a, #ff47a3);
+}
+
+.countdown-box:nth-child(2) {
+  background: linear-gradient(145deg, #007bff, #249dff);
+}
+
+.countdown-box:nth-child(3) {
+  background: linear-gradient(145deg, #f39c12, #ffb341);
+}
+
+.countdown-box:nth-child(4) {
+  background: linear-gradient(145deg, #9b59b6, #bb6bd9);
+}
+
+.countdown-box span {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: white;
+}
+
+.countdown-box p {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+    color: white;
+}
+

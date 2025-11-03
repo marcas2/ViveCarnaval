@@ -7,21 +7,21 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <style>
         :root {
-            --primary: #4361ee;
-            --primary-dark: #3a56d4;
-            --secondary: #7209b7;
-            --accent: #f72585;
-            --light: #f8f9fa;
+            --primary: #ec4899;
+            --primary-dark: #db2777;
+            --secondary: #8b5cf6;
+            --accent: #f472b6;
+            --light: #fdf4ff;
             --dark: #212529;
             --gray: #6c757d;
-            --success: #4cc9f0;
+            --success: #a855f7;
             --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             --hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
         
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background-color: #f5f7fb;
+            background-color: #fdf4ff;
             color: var(--dark);
         }
         
@@ -30,7 +30,7 @@
             width: 100%; 
             border-radius: 12px; 
             box-shadow: var(--card-shadow);
-            z-index: 1;
+            z-index: 10;
         }
         
         [x-cloak] { 
@@ -130,7 +130,7 @@
         .search-input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.15);
         }
         
         .events-container {
@@ -336,6 +336,23 @@
             align-items: center;
             gap: 0.4rem;
         }
+
+        /* Colores personalizados para iconos y elementos */
+        .text-primary {
+            color: var(--primary) !important;
+        }
+        
+        .bg-primary {
+            background-color: var(--primary) !important;
+        }
+        
+        .bg-secondary {
+            background-color: var(--secondary) !important;
+        }
+        
+        .border-primary {
+            border-color: var(--primary) !important;
+        }
     </style>
 {% endblock %}
 
@@ -345,7 +362,7 @@
 <br>
     <div class="container mx-auto px-4">
         <div class="flex items-center justify-center gap-3 mb-2">
-            <i class="fas fa-map-marked-alt text-3xl"></i>
+            <i class="fas fa-map-marked-alt text-3xl text-purple-500"></i>
             <h1 class="text-3xl font-bold">Mapa de Eventos en Pasto, Nariño</h1>
         </div>
         <p class="text-center opacity-90 max-w-2xl mx-auto">Descubre los eventos más destacados en la ciudad de Pasto. Haz clic en cualquier marcador o tarjeta para ver más detalles.</p>
@@ -391,7 +408,7 @@
                         @click="centrarEnEvento(evento)"
                     >
                         <div class="event-title">
-                            <i class="fas fa-map-pin text-red-500"></i>
+                            <i class="fas fa-map-pin text-pink-500"></i>
                             <span x-text="evento.titulo || 'Evento sin título'"></span>
                         </div>
                         <div class="event-description" x-text="evento.descripcion || 'Sin descripción disponible'"></div>
@@ -431,10 +448,7 @@
                         <i class="far fa-calendar"></i>
                         <span x-text="fecha"></span>
                     </div>
-                    <button class="location-btn" @click="centrarEnEvento(eventoActual)">
-                        <i class="fas fa-location-arrow"></i>
-                        Ver en mapa
-                    </button>
+
                 </div>
             </div>
         </div>
@@ -484,6 +498,7 @@ function mapaEventos(el) {
 
             // Inicializar mapa centrado en Pasto
             this.map = L.map('map').setView([-1.2136, -78.5051], 13);
+            setTimeout(() => this.map.invalidateSize(), 300);
             
             // Usar un tile layer más moderno
             L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -496,9 +511,9 @@ function mapaEventos(el) {
 
             this.eventos.forEach(evento => {
                 if (evento.latitud && evento.longitud) {
-                    // Crear un icono personalizado
+                    // Crear un icono personalizado con colores rosa/morado
                     const customIcon = L.divIcon({
-                        html: `<div class="bg-${this.getRandomColor()}-500 rounded-full p-2 shadow-lg flex items-center justify-center">
+                        html: `<div class="bg-pink-500 rounded-full p-2 shadow-lg flex items-center justify-center">
                                  <i class="fas fa-map-marker-alt text-white"></i>
                                </div>`,
                         className: 'custom-marker',
@@ -535,7 +550,7 @@ function mapaEventos(el) {
         },
         
         getRandomColor() {
-            const colors = ['red', 'blue', 'green', 'purple', 'indigo', 'pink'];
+            const colors = ['pink', 'purple', 'fuchsia', 'rose', 'violet'];
             return colors[Math.floor(Math.random() * colors.length)];
         },
 

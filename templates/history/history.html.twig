@@ -1,0 +1,690 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<style>
+    :root {
+        --primary: #8B0000;
+        --secondary: #D4AF37;
+        --accent: #1E3A8A;
+        --paper: #F5F1E8;
+        --ink: #2C1810;
+    }
+    
+    body {
+        background-color: var(--paper);
+        color: var(--ink);
+        line-height: 1.6;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+    }
+    
+    .vintage-border {
+        border: 8px solid;
+        border-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%238B0000' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E") 30 round;
+    }
+    
+    .hero-section {
+        background: 
+            radial-gradient(circle at 20% 80%, rgba(139, 0, 0, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, rgba(30, 58, 138, 0.05) 0%, transparent 50%),
+            linear-gradient(135deg, var(--paper) 0%, #E8DFCA 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%238B0000' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        opacity: 0.4;
+    }
+    
+    .story-card {
+        background: white;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .story-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+    
+    .story-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    }
+    
+    .timeline {
+        position: relative;
+        padding-left: 2rem;
+    }
+    
+    .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        border-radius: 3px;
+    }
+    
+    .timeline-item {
+        position: relative;
+        margin-bottom: 2rem;
+    }
+    
+    .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -2.3rem;
+        top: 0.5rem;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--primary);
+        border: 3px solid white;
+        box-shadow: 0 0 0 2px var(--primary);
+    }
+    
+    .ornamental-divider {
+        position: relative;
+        text-align: center;
+        margin: 3rem 0;
+    }
+    
+    .ornamental-divider::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+    
+    .ornamental-divider span {
+        background: var(--paper);
+        padding: 0 1.5rem;
+        position: relative;
+        z-index: 1;
+        color: var(--primary);
+        font-weight: 600;
+    }
+    
+    .text-primary {
+        color: var(--primary);
+    }
+    
+    .text-secondary {
+        color: var(--secondary);
+    }
+    
+    .bg-primary {
+        background-color: var(--primary);
+    }
+    
+    .bg-secondary {
+        background-color: var(--secondary);
+    }
+    
+    .btn-vintage {
+        background: linear-gradient(135deg, var(--primary), #A52A2A);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(139, 0, 0, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn-vintage::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+    
+    .btn-vintage:hover::before {
+        left: 100%;
+    }
+    
+    .btn-vintage:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(139, 0, 0, 0.3);
+    }
+    
+    .modal-overlay {
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+    }
+    
+    .vintage-modal {
+        background: var(--paper);
+        border-radius: 8px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(139, 0, 0, 0.1);
+    }
+    
+    .vintage-modal-header {
+        background: linear-gradient(135deg, var(--primary), #A52A2A);
+        color: white;
+        border-radius: 8px 8px 0 0;
+        padding: 1.5rem;
+    }
+    
+    .fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .slide-up {
+        animation: slideUp 0.4s ease-out;
+    }
+    
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .paper-texture {
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23000' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+    }
+    
+    .drop-cap::first-letter {
+        initial-letter: 2;
+        font-weight: bold;
+        color: var(--primary);
+        margin-right: 0.5rem;
+        line-height: 1;
+    }
+    
+    .search-box {
+        background: white;
+        border: 1px solid rgba(139, 0, 0, 0.2);
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+    
+    .search-box:focus-within {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
+    }
+    
+    .empty-state {
+        background: white;
+        border-radius: 8px;
+        padding: 3rem;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+</style>
+{% endblock %}
+{% block title %}Historia del Carnaval de Pasto - Crónica de una Tradición Milenaria{% endblock %}
+
+{% block body %}
+{{ include('navbar.html.twig') }}
+
+<!-- Hero Section -->
+<section class="hero-section py-16 md:py-24 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center animate__animated animate__fadeInUp">
+            <div class="inline-block mb-6 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full border border-white/30 shadow-sm">
+                <span class="text-primary font-semibold text-sm uppercase tracking-wider">Crónica Histórica</span>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 text-ink">Historia del Carnaval</h1>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8 text-ink/80 leading-relaxed">
+                Sumérgete en la fascinante evolución del Carnaval de Negros y Blancos de Pasto, 
+                una tradición declarada <span class="font-semibold text-primary">Patrimonio Cultural Inmaterial de la Humanidad</span>
+            </p>
+            <div class="flex justify-center">
+                <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 inline-flex items-center space-x-3 border border-white/30 shadow-sm">
+                    <i class="fas fa-award text-secondary text-2xl"></i>
+                    <span class="font-semibold text-ink">UNESCO Patrimonio Cultural</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Admin Actions -->
+    {% if app.user.rol.rol == "ROLE_ADMIN" %}
+    <div class="flex justify-end mb-12 animate__animated animate__fadeIn">
+        <button 
+            onclick="openCreateModal()"
+            class="btn-vintage flex items-center group">
+            <i class="fas fa-plus-circle mr-2 group-hover:scale-110 transition-transform"></i>
+            Registrar nuevo contenido histórico
+        </button>
+    </div>
+    {% endif %}
+
+    <!-- Search Section -->
+    <div class="paper-texture p-8 rounded-lg border border-ink/10 mb-12 slide-up">
+        <h2 class="text-2xl font-bold text-ink mb-4 flex items-center">
+            <i class="fas fa-search text-primary mr-3"></i>
+            Explora nuestra historia
+        </h2>
+        <p class="text-ink/70 mb-6 text-lg">
+            Busca en nuestros archivos históricos para encontrar los contenidos que más te interesan
+        </p>
+        <form method="GET" action="{{ path('app_history_index') }}" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="md:col-span-3">
+                <div class="search-box relative">
+                    <i class="fas fa-search absolute left-4 top-4 text-ink/40"></i>
+                    <input type="text" name="contenido" value="{{ contenido }}" 
+                           class="w-full bg-transparent pl-12 pr-4 py-3 focus:outline-none"
+                           placeholder="Buscar por título o contenido...">
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button type="submit" class="flex-1 btn-vintage flex items-center justify-center">
+                    <i class="fas fa-search mr-2"></i>
+                    Buscar
+                </button>
+                <a href="{{ path('app_history_index') }}" class="flex-1 text-ink/70 px-5 py-3 rounded border border-ink/20 hover:bg-white/50 transition flex items-center justify-center">
+                    <i class="fas fa-undo mr-2"></i>
+                    Limpiar
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- History Stories Grid -->
+    {% if historias is not empty %}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        {% for h in historias %}
+        <div class="story-card fade-in" style="animation-delay: {{ loop.index * 0.1 }}s;">
+            <!-- Image Section -->
+            <div class="relative overflow-hidden h-64">
+                {% if h.imagen %}
+                    <img src="{{ asset('uploads/history/' ~ h.imagen) }}" alt="{{ h.titulo }}" 
+                         class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+                {% else %}
+                    <div class="w-full h-full bg-gradient-to-r from-primary/10 to-secondary/10 flex items-center justify-center">
+                        <i class="fas fa-history text-6xl text-primary/40"></i>
+                    </div>
+                {% endif %}
+                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-sm">
+                    <i class="fas fa-book-open text-primary"></i>
+                </div>
+            </div>
+            
+            <!-- Content Section -->
+            <div class="p-6">
+                <h3 class="text-2xl font-bold text-ink mb-4">{{ h.titulo }}</h3>
+                
+                <div class="space-y-4 mb-6">
+                    <p class="text-ink/80 drop-cap">
+                        {{ h.contenido|default('Sin contenido disponible.') }}
+                    </p>
+                    {% if h.contenido2 %}
+                    <p class="text-ink/80">
+                        {{ h.contenido2 }}
+                    </p>
+                    {% endif %}
+                    {% if h.contenido3 %}
+                    <p class="text-ink/80">
+                        {{ h.contenido3 }}
+                    </p>
+                    {% endif %}
+                </div>
+
+                <!-- Admin Actions -->
+                {% if app.user.rol.rol == "ROLE_ADMIN" %}
+                <div class="flex gap-3 pt-4 border-t border-ink/10">
+                    <button 
+                        onclick="openEditModal({{ h.id }}, '{{ h.titulo|e('js') }}', '{{ h.contenido|e('js') }}', '{{ h.contenido2|e('js') }}', '{{ h.contenido3|e('js') }}', '{{ h.imagen|default('') }}')"
+                        class="flex-1 bg-secondary text-white px-4 py-2 rounded hover:bg-secondary/90 transition flex items-center justify-center">
+                        <i class="fas fa-edit mr-2"></i>
+                        Editar
+                    </button>
+                    <button 
+                        onclick="confirmDelete({{ h.id }})"
+                        class="flex-1 bg-primary text-white px-4 py-2 rounded hover:bg-primary/90 transition flex items-center justify-center">
+                        <i class="fas fa-trash-alt mr-2"></i>
+                        Eliminar
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <!-- Empty State -->
+    <div class="empty-state animate__animated animate__fadeIn">
+        <div class="max-w-md mx-auto">
+            <div class="bg-primary/10 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-history text-4xl text-primary"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-ink mb-3">No se encontraron contenidos</h3>
+            <p class="text-ink/60 mb-8 text-lg">
+                No hay contenidos históricos que coincidan con los filtros seleccionados. 
+                Intenta ajustar los criterios de búsqueda.
+            </p>
+            {% if app.user.rol.rol == "ROLE_ADMIN" %}
+            <button 
+                onclick="openCreateModal()"
+                class="btn-vintage flex items-center mx-auto">
+                <i class="fas fa-plus mr-2"></i>
+                Crear primer contenido histórico
+            </button>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- About Section -->
+    <div class="paper-texture rounded-lg p-8 md:p-12 mb-12 slide-up border border-ink/10">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-ink mb-6 text-center">Sobre el Carnaval de Negros y Blancos</h2>
+            <div class="ornamental-divider mb-10">
+                <span>Una Tradición Milenaria</span>
+            </div>
+            <p class="text-lg text-ink/80 mb-8 leading-relaxed text-center">
+                El Carnaval de Negros y Blancos es la festividad más importante del sur de Colombia, 
+                declarado <span class="font-semibold text-primary">Patrimonio Cultural Inmaterial de la Humanidad</span> por la UNESCO en 2009. 
+                Esta celebración, que se realiza cada año del 2 al 7 de enero en Pasto, 
+                representa la fusión de todas las culturas y expresa una relación de hermandad 
+                entre todos los ciudadanos.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                <div class="bg-white rounded-lg p-6 shadow-sm border border-ink/5">
+                    <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-calendar-day text-primary text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-ink mb-2 text-center">Orígenes Milenarios</h3>
+                    <p class="text-sm text-ink/60 text-center">Raíces en rituales indígenas prehispánicos</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-sm border border-ink/5">
+                    <div class="bg-secondary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-hands text-secondary text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-ink mb-2 text-center">Expresión Cultural</h3>
+                    <p class="text-sm text-ink/60 text-center">Fusión de tradiciones indígenas, africanas y españolas</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-sm border border-ink/5">
+                    <div class="bg-accent/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-trophy text-accent text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-ink mb-2 text-center">Reconocimiento Mundial</h3>
+                    <p class="text-sm text-ink/60 text-center">Patrimonio Cultural Inmaterial de la Humanidad UNESCO</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal CREAR -->
+<div id="createModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
+    <div class="vintage-modal w-full max-w-2xl max-h-[90vh] overflow-y-auto slide-up">
+        <div class="vintage-modal-header">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-bold flex items-center">
+                    <i class="fas fa-plus-circle mr-3"></i>
+                    Registrar nuevo contenido histórico
+                </h2>
+                <button onclick="closeCreateModal()" class="text-white hover:text-gray-200 transition">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+            <p class="text-white/90 text-sm mt-1">
+                Añade nueva información sobre la historia del Carnaval
+            </p>
+        </div>
+        
+        <form 
+            action="{{ path('app_history_create') }}" 
+            method="POST" 
+            enctype="multipart/form-data" 
+            class="p-6 space-y-6">
+            
+            <div>
+                <label class="block text-ink font-bold mb-2">Título *</label>
+                <input name="titulo" class="w-full border border-ink/20 rounded p-3 focus:ring-2 focus:ring-primary focus:border-primary transition bg-white" 
+                       placeholder="Ej: Orígenes del Día de Negros" required>
+            </div>
+            
+            <div>
+                <label class="block text-ink font-bold mb-2">Contenido 1 *</label>
+                <textarea name="contenido" rows="4" class="w-full border border-ink/20 rounded p-3 focus:ring-2 focus:ring-primary focus:border-primary transition bg-white" 
+                          placeholder="Describe este aspecto histórico del Carnaval..." required></textarea>
+            </div>
+     
+            <div>
+                <label class="block text-ink font-bold mb-2">Contenido 2</label>
+                <textarea name="contenido2" rows="4" class="w-full border border-ink/20 rounded p-3 focus:ring-2 focus:ring-primary focus:border-primary transition bg-white" 
+                          placeholder="Información adicional..."></textarea>
+            </div>
+
+            <div>
+                <label class="block text-ink font-bold mb-2">Contenido 3</label>
+                <textarea name="contenido3" rows="4" class="w-full border border-ink/20 rounded p-3 focus:ring-2 focus:ring-primary focus:border-primary transition bg-white" 
+                          placeholder="Más detalles históricos..."></textarea>
+            </div>
+            
+            <div>
+                <label class="block text-ink font-bold mb-2">Imagen *</label>
+                <div class="border-2 border-dashed border-ink/20 rounded p-6 text-center hover:border-primary transition cursor-pointer bg-white/50" 
+                    onclick="document.querySelector('input[name=imagen]').click()">
+                    <i class="fas fa-cloud-upload-alt text-4xl text-ink/30 mb-3"></i>
+                    <p class="text-ink/70 font-medium">Haz clic para subir una imagen</p>
+                    <p class="text-ink/40 text-sm mt-1">PNG, JPG hasta 5MB</p>
+                    <input name="imagen" type="file" accept="image/*" class="hidden" required onchange="previewCreateImage(event)">
+                    <img id="createPreview" class="mt-4 rounded max-h-48 mx-auto hidden">
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4">
+                <button type="button" onclick="closeCreateModal()" class="px-5 py-2.5 text-ink/70 bg-ink/10 rounded hover:bg-ink/20 transition flex items-center">
+                    <i class="fas fa-times mr-2"></i>
+                    Cancelar
+                </button>
+                <button type="submit" class="btn-vintage flex items-center">
+                    <i class="fas fa-save mr-2"></i>
+                    Guardar contenido
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal EDITAR -->
+<div id="editModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay">
+    <div class="vintage-modal w-full max-w-2xl max-h-[90vh] overflow-y-auto slide-up">
+        <div class="vintage-modal-header">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-bold flex items-center">
+                    <i class="fas fa-edit mr-3"></i>
+                    Editar contenido histórico
+                </h2>
+                <button onclick="closeEditModal()" class="text-white hover:text-gray-200 transition">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+            <p class="text-white/90 text-sm mt-1">
+                Modifica la información del contenido seleccionado
+            </p>
+        </div>
+        
+        <form id="editForm" method="POST" enctype="multipart/form-data" class="p-6 space-y-6">
+            <input type="hidden" id="editId">
+            <div>
+                <label class="block text-ink font-bold mb-2">Título *</label>
+                <input id="editTitulo" name="titulo" class="w-full border border-ink/20 rounded p-3 focus:ring-2 focus:ring-primary focus:border-primary transition bg-white" required>
+            </div>
+            
+            <div>
+                <label class="block text-ink font-bold mb-2">Contenido 1 *</label>
+                <textarea id="editContenido" name="contenido" rows="4" class="w-full border border-ink/20 rounded p-3 focus:ring-2 focus:ring-primary focus:border-primary transition bg-white" required></textarea>
+            </div>
+     
+            <div>
+                <label class="block text-ink font-bold mb-2">Contenido 2</label>
+                <textarea id="editContenido2" name="contenido2" rows="4" class="w-full border border-ink/20 rounded p-3 focus:ring-2 focus:ring-primary focus:border-primary transition bg-white"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-ink font-bold mb-2">Contenido 3</label>
+                <textarea id="editContenido3" name="contenido3" rows="4" class="w-full border border-ink/20 rounded p-3 focus:ring-2 focus:ring-primary focus:border-primary transition bg-white"></textarea>
+            </div>
+            
+            <div>
+                <label class="block text-ink font-bold mb-2">Cambiar imagen</label>
+                <div class="border-2 border-dashed border-ink/20 rounded p-6 text-center hover:border-primary transition cursor-pointer bg-white/50" 
+                    onclick="document.querySelector('#editForm input[name=imagen]').click()">
+                    <i class="fas fa-cloud-upload-alt text-4xl text-ink/30 mb-3"></i>
+                    <p class="text-ink/70 font-medium">Haz clic para cambiar la imagen</p>
+                    <p class="text-ink/40 text-sm mt-1">PNG, JPG hasta 5MB</p>
+                    <input name="imagen" type="file" accept="image/*" class="hidden" onchange="previewEditImage(event)">
+                    <img id="editPreview" class="mt-4 rounded max-h-48 mx-auto hidden">
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4">
+                <button type="button" onclick="closeEditModal()" class="px-5 py-2.5 text-ink/70 bg-ink/10 rounded hover:bg-ink/20 transition flex items-center">
+                    <i class="fas fa-times mr-2"></i>
+                    Cancelar
+                </button>
+                <button type="submit" class="btn-vintage flex items-center">
+                    <i class="fas fa-save mr-2"></i>
+                    Guardar cambios
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{ include('footer.html.twig') }}
+
+<script>
+function openCreateModal() { 
+    document.getElementById('createModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCreateModal() { 
+    document.getElementById('createModal').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+function confirmDelete(id) {
+    Swal.fire({
+        title: '¿Eliminar contenido histórico?',
+        text: 'Esta acción no se puede deshacer y el contenido se perderá permanentemente.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#8B0000',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true
+    }).then(result => {
+        if (result.isConfirmed) {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/history/delete/' + id;
+            document.body.appendChild(form);
+            form.submit();
+        }
+    });
+}
+
+function openEditModal(id, titulo, contenido, contenido2, contenido3, imagen = null) {
+    document.getElementById('editModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    
+    document.getElementById('editId').value = id;
+    document.getElementById('editTitulo').value = titulo;
+    document.getElementById('editContenido').value = contenido;
+    document.getElementById('editContenido2').value = contenido2;
+    document.getElementById('editContenido3').value = contenido3;
+    document.getElementById('editForm').action = '/history/edit/' + id;
+
+    const preview = document.getElementById('editPreview');
+    if (imagen) {
+        preview.src = '/uploads/history/' + imagen;
+        preview.classList.remove('hidden');
+    } else {
+        preview.classList.add('hidden');
+    }
+}
+
+function closeEditModal() { 
+    document.getElementById('editModal').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+// Cerrar modales al hacer clic fuera
+document.addEventListener('click', function(event) {
+    const createModal = document.getElementById('createModal');
+    const editModal = document.getElementById('editModal');
+    
+    if (event.target === createModal) {
+        closeCreateModal();
+    }
+    
+    if (event.target === editModal) {
+        closeEditModal();
+    }
+});
+
+function previewCreateImage(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('createPreview');
+    if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.classList.remove('hidden');
+    } else {
+        preview.classList.add('hidden');
+    }
+}
+
+function previewEditImage(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('editPreview');
+    if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.classList.remove('hidden');
+    } else {
+        preview.classList.add('hidden');
+    }
+}
+</script>
+{% endblock %}

@@ -40,6 +40,67 @@
         .btn-register:hover {
             background: linear-gradient(135deg, #059669 0%, #10b981 100%);
         }
+        /* Estilos para los modales */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            position: relative;
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            background: linear-gradient(135deg, #7e22ce 0%, #3b82f6 100%);
+            color: white;
+            border-radius: 12px 12px 0 0;
+        }
+        .modal-body {
+            padding: 1.5rem;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .modal-close:hover {
+            transform: scale(1.1);
+        }
     </style>
 {% endblock %}
 
@@ -124,10 +185,7 @@
                             </div>
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                             <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <input id="remember_me" name="_remember_me" type="checkbox" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
-                                    <label for="remember_me" class="ml-2 block text-sm text-gray-700">Recordarme</label>
-                                </div>
+
                                 <div class="text-sm">
                                     <a href="#" class="font-medium text-purple-600 hover:text-purple-500 transition-colors duration-200">¿Olvidaste tu contraseña?</a>
                                 </div>
@@ -184,7 +242,7 @@
                             <div class="flex items-center">
                                 <input id="terms" name="terms" type="checkbox" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded" required>
                                 <label for="terms" class="ml-2 block text-sm text-gray-700">
-                                    Acepto los <a href="#" class="text-purple-600 hover:text-purple-500 transition-colors duration-200">términos y condiciones</a> y la <a href="#" class="text-purple-600 hover:text-purple-500 transition-colors duration-200">política de privacidad</a>
+                                    Acepto los <a href="#" class="text-purple-600 hover:text-purple-500 transition-colors duration-200 open-modal" data-modal="conditions-modal">términos y condiciones</a> y la <a href="#" class="text-purple-600 hover:text-purple-500 transition-colors duration-200 open-modal" data-modal="privacy-modal">política de privacidad</a>
                                 </label>
                             </div>
                             <button type="submit" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white btn-register hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-300">
@@ -196,8 +254,104 @@
 
                 
                 <div class="text-center text-sm text-gray-600 mt-4">
-                    <p>Al acceder, aceptas nuestras <a href="#" class="text-purple-600 hover:text-purple-800 transition-colors duration-200">Condiciones</a>, <a href="#" class="text-purple-600 hover:text-purple-800 transition-colors duration-200">Política de datos</a> y <a href="#" class="text-purple-600 hover:text-purple-800 transition-colors duration-200">Política de cookies</a>.</p>
+                    <p>Al acceder, aceptas nuestras <a href="#" class="text-purple-600 hover:text-purple-800 transition-colors duration-200 open-modal" data-modal="conditions-modal">Condiciones</a>, <a href="#" class="text-purple-600 hover:text-purple-800 transition-colors duration-200 open-modal" data-modal="privacy-modal">Política de datos</a> y <a href="#" class="text-purple-600 hover:text-purple-800 transition-colors duration-200 open-modal" data-modal="cookies-modal">Política de cookies</a>.</p>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modales -->
+<!-- Modal de Condiciones -->
+<div id="conditions-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="text-xl font-bold">Términos y Condiciones</h2>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-purple-700">1. Aceptación de los Términos</h3>
+                <p class="text-gray-700">Al acceder y utilizar ViveCarnaval, aceptas cumplir con estos términos y condiciones.</p>
+                
+                <h3 class="text-lg font-semibold text-purple-700">2. Uso del Servicio</h3>
+                <p class="text-gray-700">El servicio está destinado para la compra y gestión de entradas para eventos carnavaleros. No se permite el uso fraudulento o indebido.</p>
+                
+                <h3 class="text-lg font-semibold text-purple-700">3. Cuentas de Usuario</h3>
+                <p class="text-gray-700">Eres responsable de mantener la confidencialidad de tu cuenta y contraseña. Debes notificarnos inmediatamente cualquier uso no autorizado.</p>
+                
+                <h3 class="text-lg font-semibold text-purple-700">4. Compras y Pagos</h3>
+                <p class="text-gray-700">Todas las compras están sujetas a disponibilidad. Los precios pueden cambiar sin previo aviso.</p>
+                
+                <h3 class="text-lg font-semibold text-purple-700">5. Cancelaciones y Reembolsos</h3>
+                <p class="text-gray-700">Las políticas de cancelación y reembolso varían según el evento. Consulta las condiciones específicas de cada evento.</p>
+                
+                <h3 class="text-lg font-semibold text-purple-700">6. Propiedad Intelectual</h3>
+                <p class="text-gray-700">Todo el contenido de ViveCarnaval está protegido por derechos de autor y no puede ser reproducido sin autorización.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Política de Datos -->
+<div id="privacy-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="text-xl font-bold">Política de Privacidad y Datos</h2>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-purple-700">1. Información que Recopilamos</h3>
+                <p class="text-gray-700">Recopilamos información personal como nombre, email, y datos de pago necesarios para proporcionar nuestros servicios.</p>
+                
+                <h3 class="text-lg font-semibold text-purple-700">2. Uso de la Información</h3>
+                <p class="text-gray-700">Utilizamos tu información para procesar transacciones, mejorar nuestros servicios y comunicarnos contigo sobre eventos relevantes.</p>
+                
+                <h3 class="text-lg font-semibold text-purple-700">3. Protección de Datos</h3>
+                <p class="text-gray-700">Implementamos medidas de seguridad para proteger tu información personal contra accesos no autorizados.</p>
+                
+                <h3 class="text-lg font-semibold text-purple-700">4. Compartir Información</h3>
+                <p class="text-gray-700">No vendemos ni alquilamos tu información personal a terceros. Solo compartimos datos necesarios con organizadores de eventos.</p>
+                
+                <h3 class="text-lg font-semibold text-purple-700">5. Tus Derechos</h3>
+                <p class="text-gray-700">Tienes derecho a acceder, corregir o eliminar tu información personal. Contacta con nosotros para ejercer estos derechos.</p>
+                
+                <h3 class="text-lg font-semibold text-purple-700">6. Cambios en la Política</h3>
+                <p class="text-gray-700">Nos reservamos el derecho de modificar esta política. Los cambios serán notificados a través de nuestro sitio web.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Política de Cookies -->
+<div id="cookies-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="text-xl font-bold">Política de Cookies</h2>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-purple-700">1. ¿Qué son las Cookies?</h3>
+                <p class="text-gray-700">Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas nuestro sitio web.</p>
+                
+                <h3 class="text-lg font-semibold text-purple-700">2. Tipos de Cookies que Utilizamos</h3>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li><strong>Cookies esenciales:</strong> Necesarias para el funcionamiento básico del sitio</li>
+                    <li><strong>Cookies de funcionalidad:</strong> Recuerdan tus preferencias y configuraciones</li>
+                    <li><strong>Cookies analíticas:</strong> Nos ayudan a entender cómo los usuarios interactúan con nuestro sitio</li>
+                    <li><strong>Cookies de marketing:</strong> Utilizadas para mostrar anuncios relevantes</li>
+                </ul>
+                
+                <h3 class="text-lg font-semibold text-purple-700">3. Gestión de Cookies</h3>
+                <p class="text-gray-700">Puedes gestionar o deshabilitar las cookies a través de la configuración de tu navegador. Ten en cuenta que deshabilitar ciertas cookies puede afectar la funcionalidad del sitio.</p>
+                
+                <h3 class="text-lg font-semibold text-purple-700">4. Cookies de Terceros</h3>
+                <p class="text-gray-700">Algunas cookies pueden ser establecidas por servicios de terceros como Google Analytics o plataformas de pago.</p>
+                
+                <h3 class="text-lg font-semibold text-purple-700">5. Consentimiento</h3>
+                <p class="text-gray-700">Al utilizar nuestro sitio, aceptas el uso de cookies de acuerdo con esta política.</p>
             </div>
         </div>
     </div>
@@ -231,7 +385,59 @@ document.addEventListener('DOMContentLoaded', function() {
             form.style.transform = 'translateY(0)';
         }, 10);
     }
-     // Formulario de Register
+
+    // Manejo de modales
+    function initModals() {
+        const modalTriggers = document.querySelectorAll('.open-modal');
+        const modals = document.querySelectorAll('.modal');
+        const closeButtons = document.querySelectorAll('.modal-close');
+
+        // Abrir modal
+        modalTriggers.forEach(trigger => {
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                const modalId = this.getAttribute('data-modal');
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        // Cerrar modal
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const modal = this.closest('.modal');
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // Cerrar modal al hacer clic fuera
+        modals.forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Cerrar con tecla Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                modals.forEach(modal => {
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+        });
+    }
+
+    // Formulario de Register
     document.getElementById('registerForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
@@ -267,7 +473,6 @@ document.addEventListener('DOMContentLoaded', function() {
             showMessage('Error de conexión', 'error');
         }
     });
-
 
     // Manejo de tabs
     loginTab.addEventListener('click', () => {
@@ -337,17 +542,20 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
     });
-    function showMessage(message, type) {
-    Swal.fire({
-        icon: type,
-        title: type === 'success' ? 'Éxito' : 'Error',
-        text: message,
-        confirmButtonColor: type === 'success' ? '#7e22ce' : '#dc2626',
-        background: '#fff',
-        iconColor: type === 'success' ? '#7e22ce' : '#dc2626'
-    });
-}
 
+    function showMessage(message, type) {
+        Swal.fire({
+            icon: type,
+            title: type === 'success' ? 'Éxito' : 'Error',
+            text: message,
+            confirmButtonColor: type === 'success' ? '#7e22ce' : '#dc2626',
+            background: '#fff',
+            iconColor: type === 'success' ? '#7e22ce' : '#dc2626'
+        });
+    }
+
+    // Inicializar modales
+    initModals();
 
     // Inicializar con la pestaña de login activa
     loginTab.classList.add('tab-active', 'text-purple-700', 'border-purple-500');

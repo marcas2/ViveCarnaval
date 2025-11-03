@@ -1,38 +1,127 @@
-
-<nav class="bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-lg sticky top-0 z-50">
+<nav class="bg-white text-gray-800 shadow-md sticky top-0 z-50 border-b border-gray-200">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between h-16 items-center">
-      <a href="/home" class="text-2xl font-extrabold flex items-center animate__animated animate__fadeInLeft">
-        <span class="text-3xl mr-2">🎭</span> 
-        <span class="hidden md:inline">Carnaval de Negros y Blancos</span>
-        <span class="md:hidden">Carnaval</span>
-      </a>
-      <div class="space-x-6 hidden sm:flex">
-        <a href="{{ path('app_user_user') }}" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-user mr-1"></i> Perfil</a>
-        <a href="{{ path('app_events_list') }}" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-calendar-alt mr-1"></i> Eventos</a>
-        <a href="{{ path('app_events_map') }}" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-map-marked-alt mr-1"></i> Mapa</a>
-        <a href="#galeria" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-images mr-1"></i> Galería</a>
-        <a href="#historia" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-history mr-1"></i> Historia</a>
-        <a href="/logout" class="hover:text-gray-200 transition-colors duration-300"><i class="fas fa-home mr-1"></i> Cerrar Sesión</a>
+    <div class="flex justify-between items-center h-20 animate-fade-in-down">
 
+      <!-- Logo y texto principal -->
+      <div class="flex items-center space-x-3 animate-slide-in-left">
+        <div class="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 to-fuchsia-600 text-white font-bold text-sm shadow-md">
+          <i class="fa-solid fa-mask"></i>
+        </div>
+        <div>
+          <h1 class="font-semibold text-fuchsia-700 leading-tight">Carnaval de Negros y Blancos</h1>
+          <p class="text-sm text-gray-500">Pasto 2025</p>
+        </div>
       </div>
-      <!-- Mobile menu button -->
-      <div class="sm:hidden">
-        <button type="button" class="text-white hover:text-gray-200 focus:outline-none" id="mobile-menu-button">
+
+      <!-- Menú principal -->
+      <div class="hidden sm:flex items-center space-x-6 font-medium animate-fade-in">
+        <a href="/home" class="text-white bg-gradient-to-r from-pink-500 to-fuchsia-600 px-4 py-2 rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300">
+          Inicio
+        </a>
+        <a href="{{ path('app_events_list') }}" class="text-gray-700 hover:text-fuchsia-600 hover:scale-105 transition-all duration-300">
+          Eventos
+        </a>
+        <a href="{{ path('app_events_map') }}" class="text-gray-700 hover:text-fuchsia-600 hover:scale-105 transition-all duration-300">
+          Mapa
+        </a>
+        <a href="{{ path('app_gallery_index') }}" class="text-gray-700 hover:text-fuchsia-600 hover:scale-105 transition-all duration-300">
+          Galería
+        </a>
+        <a href="{{ path('app_history_index') }}" class="text-gray-700 hover:text-fuchsia-600 hover:scale-105 transition-all duration-300">
+          Historia
+        </a>
+        <a href="{{ path('app_user_user') }}" class="text-gray-700 hover:text-fuchsia-600 hover:scale-105 transition-all duration-300" title="Editar perfil">
+          <i class="fa-solid fa-user-pen fa-flip-horizontal fa-lg" style="color: #fd08e8;"></i>        
+        </a>
+      </div>
+
+      <!-- Iconos de usuario y cerrar sesión -->
+      <div class="hidden sm:flex items-center space-x-4 animate-fade-in">
+        
+        <a href="/logout" class="text-gray-700 hover:text-fuchsia-600 hover:scale-105 transition-all duration-300" title="Cerrar sesión">
+          <i class="fa-solid fa-right-from-bracket fa-lg" style="color: #fd08e8;"></i>       
+        </a>
+      </div>
+
+      <!-- Botón menú móvil -->
+      <div class="sm:hidden animate-slide-in-right">
+        <button id="mobile-menu-button" class="text-fuchsia-700 focus:outline-none">
           <i class="fas fa-bars text-2xl"></i>
         </button>
       </div>
     </div>
   </div>
-  <!-- Mobile menu -->
-  <div class="hidden sm:hidden bg-pink-600" id="mobile-menu">
-    <div class="px-2 pt-2 pb-3 space-y-1">
-      <a href="/" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-home mr-2"></i>Inicio</a>
-      <a href="{{ path('app_user_user') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-user mr-2"></i>Perfil</a>
-      <a href="{{ path('app_events_list') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-calendar-alt mr-2"></i>Eventos</a>
-      <a href="{{ path('app_events_map') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-map-marked-alt mr-2"></i>Mapa</a>
-      <a href="#galeria" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-images mr-2"></i>Galería</a>
-      <a href="#historia" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-pink-500 transition-colors duration-300"><i class="fas fa-history mr-2"></i>Historia</a>
+
+  <!-- Menú móvil -->
+  <div id="mobile-menu" class="hidden sm:hidden bg-white border-t border-gray-200 overflow-hidden transition-all duration-500 ease-in-out">
+    <div class="px-4 pt-3 pb-4 space-y-2 animate-fade-in">
+      <a href="/home" class="block text-white bg-gradient-to-r from-pink-500 to-fuchsia-600 px-3 py-2 rounded-md font-medium shadow-md hover:opacity-90 transition-all duration-300">
+        Inicio
+      </a>
+      <a href="{{ path('app_events_list') }}" class="block text-gray-700 hover:text-fuchsia-600 transition-all duration-300">
+        Eventos
+      </a>
+      <a href="{{ path('app_events_map') }}" class="block text-gray-700 hover:text-fuchsia-600 transition-all duration-300">
+        Mapa
+      </a>
+      <a href="{{ path('app_gallery_index') }}" class="block text-gray-700 hover:text-fuchsia-600 transition-all duration-300">
+        Galería
+      </a>
+      <a href="{{ path('app_history_index') }}" class="block text-gray-700 hover:text-fuchsia-600 transition-all duration-300">
+        Historia
+      </a>
+      <div class="pt-2 border-t border-gray-200">
+        <a href="{{ path('app_user_user') }}" class="block text-gray-700 hover:text-fuchsia-600 transition-all duration-300">
+          <i class="fa-solid fa-user-pen fa-flip-horizontal mr-2" style="color: #fd08e8;"></i>Editar perfil
+        </a>
+        <a href="/logout" class="block text-gray-700 hover:text-fuchsia-600 transition-all duration-300">
+          <i class="fa-solid fa-right-from-bracket mr-2" style="color: #fd08e8;"></i>Cerrar sesión
+        </a>
+      </div>
     </div>
   </div>
 </nav>
+
+<script>
+  const menuBtn = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+    mobileMenu.classList.toggle('animate-slide-down');
+  });
+</script>
+
+<!-- Animaciones personalizadas -->
+<style>
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes fade-in-down {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slide-in-left {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes slide-in-right {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes slide-down {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-in { animation: fade-in 0.6s ease-in-out; }
+  .animate-fade-in-down { animation: fade-in-down 0.6s ease-in-out; }
+  .animate-slide-in-left { animation: slide-in-left 0.6s ease-in-out; }
+  .animate-slide-in-right { animation: slide-in-right 0.6s ease-in-out; }
+  .animate-slide-down { animation: slide-down 0.5s ease-in-out; }
+</style>

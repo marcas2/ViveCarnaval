@@ -1,52 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-          <style>
-            body {
-            font-family: 'Poppins', sans-serif;
-            }
-            h1, h2, h3, h4, h5, h6 {
-            font-family: 'Montserrat', sans-serif;
-            }
-            .fc {
-            font-family: 'Poppins', sans-serif;
-            }
-            .card-hover {
-            transition: all 0.3s ease;
-            }
-            .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            }
-            .countdown-box {
-            transition: transform 0.3s ease;
-            }
-            .countdown-box:hover {
-            transform: scale(1.05);
-            }
-            .floating {
-            animation: float 6s ease-in-out infinite;
-            }
-            @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-            }
-            .gradient-bg {
-            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-            }
-            .hero-pattern {
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f472b6' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            }
-        </style>
-  
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/home.css') }}">
 {% endblock %}
 
 {% block body %}
 
-
 {{ include('navbar.html.twig') }}
-
 
 <!-- 🎉 Hero con contador - Versión Mejorada -->
 <section class="bg-white py-16 md:py-24 relative overflow-hidden">
@@ -58,49 +19,50 @@
     <div class="absolute top-1/3 left-1/2 w-48 h-48 rounded-full bg-purple-100 opacity-30"></div>
     <div class="absolute bottom-20 right-20 w-28 h-28 rounded-full bg-pink-100 opacity-40"></div>
   </div>
-  
+
   <!-- Patrón de fondo sutil -->
   <div class="absolute inset-0 z-0 opacity-[0.03]">
     <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%239C92AC\" fill-opacity=\"0.4\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
   </div>
   
   <div class="max-w-6xl mx-auto px-4 text-center relative z-10">
-    <!-- Logo/Ícono principal con animación mejorada -->
-    <div class="w-28 h-28 mx-auto flex items-center justify-center rounded-full bg-gradient-to-r from-pink-500 to-purple-600 shadow-2xl mb-8 floating animate__animated animate__fadeInDown">
-      <span class="text-5xl text-white">🎭</span>
-    </div>
-
     <!-- Títulos principales -->
-    <h1 class="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent animate__animated animate__fadeIn">
-      Carnaval de Negros y Blancos
-    </h1>
-    <div class="w-24 h-1 bg-gradient-to-r from-pink-500 to-purple-600 mx-auto mt-6 mb-6 rounded-full"></div>
+    <center><img src="{{ asset('img/ViveCarnaval.png') }}" alt="ViveCarnaval" class="h-80 object-contain w-auto object-contain max-h-full" ></center>
+    <div class="w-40 h-1 bg-gradient-to-r from-pink-500 to-purple-600 mx-auto mt-6 mb-6 rounded-full"></div>
     <p class="text-xl text-gray-700 mt-4 max-w-3xl mx-auto animate__animated animate__fadeIn animate__delay-1s">
       <span class="font-semibold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">Patrimonio Cultural Inmaterial de la Humanidad</span>. 
-      La fiesta más colorida y alegre del sur de Colombia te espera 🎊
+      La fiesta más colorida y alegre del sur de Colombia te espera con tradición, cultura y diversión! 🎊
     </p>
     
     <!-- Contador regresivo -->
     <div class="mt-16 mb-10">
-      <h2 class="text-2xl font-semibold text-gray-700 mb-2 animate__animated animate__fadeIn animate__delay-1s">¡La celebración comienza en!</h2>
-      <p class="text-gray-500 text-sm animate__animated animate__fadeIn animate__delay-1s">2-6 de enero, Pasto - Nariño</p>
+      <p class="text-gray-500 text-sm animate__animated animate__fadeIn animate__delay-1s">28 de diciembre-6 de enero, Pasto - Nariño</p>
+      <h2 class="text-2xl font-semibold text-gray-700 mb-2 animate__animated animate__fadeIn animate__delay-1s">¡Faltan solo!</h2>
+
+      <!-- Estado de carga mejorado -->
+      <div id="countdown-loading" class="max-w-4xl mx-auto mt-8 flex justify-center">
+        <div class="inline-flex items-center px-6 py-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full shadow-lg">
+          <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
+          <span>Cargando contador...</span>
+        </div>
+      </div>
       
       <!-- Cuadros del contador mejorados -->
-      <div id="countdown" class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-8">
-        <div class="bg-gradient-to-b from-white to-gray-50 text-gray-800 rounded-2xl p-6 shadow-lg countdown-box border border-gray-100 animate__animated animate__fadeInUp animate__delay-1s hover:shadow-xl transition-all duration-300">
-          <span id="days" class="text-4xl md:text-5xl font-bold block bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">0</span>
+      <div id="countdown" class="hidden grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-8">
+        <div class="bg-gradient-to-b from-pink to-pink-50 text-pink-800 rounded-2xl p-6 shadow-lg countdown-box border border-pink-100 animate__animated animate__fadeInUp animate__delay-1s hover:shadow-xl transition-all duration-300">
+          <span id="days" class="text-4xl md:text-5xl font-bold block bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">--</span>
           <p class="mt-2 font-medium text-gray-600">Días</p>
         </div>
         <div class="bg-gradient-to-b from-white to-gray-50 text-gray-800 rounded-2xl p-6 shadow-lg countdown-box border border-gray-100 animate__animated animate__fadeInUp animate__delay-2s hover:shadow-xl transition-all duration-300">
-          <span id="hours" class="text-4xl md:text-5xl font-bold block bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">0</span>
+          <span id="hours" class="text-4xl md:text-5xl font-bold block bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">--</span>
           <p class="mt-2 font-medium text-gray-600">Horas</p>
         </div>
         <div class="bg-gradient-to-b from-white to-gray-50 text-gray-800 rounded-2xl p-6 shadow-lg countdown-box border border-gray-100 animate__animated animate__fadeInUp animate__delay-3s hover:shadow-xl transition-all duration-300">
-          <span id="minutes" class="text-4xl md:text-5xl font-bold block bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">0</span>
+          <span id="minutes" class="text-4xl md:text-5xl font-bold block bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">--</span>
           <p class="mt-2 font-medium text-gray-600">Minutos</p>
         </div>
         <div class="bg-gradient-to-b from-white to-gray-50 text-gray-800 rounded-2xl p-6 shadow-lg countdown-box border border-gray-100 animate__animated animate__fadeInUp animate__delay-4s hover:shadow-xl transition-all duration-300">
-          <span id="seconds" class="text-4xl md:text-5xl font-bold block bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">0</span>
+          <span id="seconds" class="text-4xl md:text-5xl font-bold block bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">--</span>
           <p class="mt-2 font-medium text-gray-600">Segundos</p>
         </div>
       </div>
@@ -108,26 +70,27 @@
 
     <!-- Botones de acción -->
     <div class="mt-12 flex flex-col sm:flex-row justify-center gap-4 animate__animated animate__fadeIn animate__delay-2s">
-      <a href="#calendar" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-8 py-4 rounded-full shadow-lg hover:from-pink-600 hover:to-purple-700 hover:shadow-xl transition-all duration-300 font-semibold flex items-center justify-center group">
+      <a href="#calendar-section" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-8 py-4 rounded-full shadow-lg hover:from-pink-600 hover:to-purple-700 hover:shadow-xl transition-all duration-300 font-semibold flex items-center justify-center group">
         <i class="fas fa-calendar-check mr-2 group-hover:animate-pulse"></i> Ver Eventos
         <i class="fas fa-arrow-down ml-2 text-sm group-hover:animate-bounce"></i>
       </a>
-      <a href="#mapa" class="bg-white border-2 border-pink-500 text-pink-500 px-8 py-4 rounded-full shadow-lg hover:bg-pink-50 hover:shadow-xl transition-all duration-300 font-semibold flex items-center justify-center group">
-        <i class="fas fa-map-marker-alt mr-2"></i> Ver Ubicación
-        <i class="fas fa-arrow-right ml-2 text-sm group-hover:translate-x-1 transition-transform duration-300"></i>
+      <a href="{{ path('app_events_map') }}" class="bg-white border-2 border-pink-500 text-pink-500 px-8 py-4 rounded-full shadow-lg hover:bg-pink-50 hover:shadow-xl transition-all duration-300 font-semibold flex items-center justify-center group">
+        <i class="fas fa-map-marker-alt mr-2"></i>  Ubicación
       </a>
     </div>
 
     <!-- Indicador de scroll -->
     <div class="mt-16 animate-bounce animate__animated animate__fadeIn animate__delay-3s">
-      <a href="#calendar-section" class="text-gray-400 hover:text-pink-500 transition-colors duration-300">
+      <a href="#info-section" class="text-gray-400 hover:text-pink-500 transition-colors duration-300">
         <span class="block">Scroll para descubrir</span>
         <i class="fas fa-chevron-down text-2xl mt-2"></i>
       </a>
     </div>
   </div>
+</section>
+
 <!-- Sección de información -->
-<section class="py-16 bg-gray-50">
+<section id="info-section" class="py-16 bg-gray-50">
   <div class="max-w-6xl mx-auto px-4">
     <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Una celebración de <span class="text-transparent bg-clip-text gradient-bg">diversidad y cultura</span></h2>
     
@@ -159,18 +122,130 @@
   </div>
 </section>
 
-    <!-- Contenido principal con calendario y cards -->
-    <section class="py-16 bg-white" id="calendar-section">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="bg-white shadow-xl rounded-2xl p-6 card-hover">
-        <div class="flex items-center mb-6">
-          <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center text-white text-xl mr-4">
-            <i class="fas fa-calendar-days"></i>
-          </div>
-          <h2 class="text-2xl font-bold text-gray-800">Calendario del Carnaval</h2>
-        </div>
-        {{ include('calendar/index.html.twig') }}
+<!-- Nueva sección: Tradiciones Principales -->
+<section class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Tradiciones Principales</h2>
     
+    <div class="grid md:grid-cols-2 gap-8 mb-12">
+      <div class="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-8 shadow-lg card-hover">
+        <div class="flex items-center mb-6">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-white text-xl mr-4">
+            <i class="fas fa-mask"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-800">Día de Negros y Blancos</h3>
+        </div>
+        <p class="text-gray-700 mb-4">El 5 y 6 de enero, esta tradición representa la igualdad y la unión entre culturas. Comienza con el "Día de Negros" donde todos se pintan de negro, seguido del "Día de Blancos" con talco y pintura blanca.</p>
+        <div class="flex items-center text-sm text-gray-600">
+          <i class="fas fa-calendar-alt mr-2"></i>
+          <span>5 y 6 de enero</span>
+        </div>
+      </div>
+      
+      <div class="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-8 shadow-lg card-hover">
+        <div class="flex items-center mb-6">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-white text-xl mr-4">
+            <i class="fas fa-caravan"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-800">Desfile de Carrozas</h3>
+        </div>
+        <p class="text-gray-700 mb-4">Impresionantes carrozas decoradas artesanalmente desfilan por las calles de Pasto. Cada una representa meses de trabajo y creatividad de artistas locales, mostrando escenas culturales y mitológicas.</p>
+        <div class="flex items-center text-sm text-gray-600">
+          <i class="fas fa-calendar-alt mr-2"></i>
+          <span>2-6 de enero</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-8 shadow-lg card-hover">
+        <div class="flex items-center mb-6">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-white text-xl mr-4">
+            <i class="fas fa-child"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-800">Carnavalito</h3>
+        </div>
+        <p class="text-gray-700 mb-4">Especialmente dedicado a los niños, esta versión del carnaval fomenta la participación de las nuevas generaciones en las tradiciones, con desfiles, juegos y actividades adaptadas para ellos.</p>
+        <div class="flex items-center text-sm text-gray-600">
+          <i class="fas fa-calendar-alt mr-2"></i>
+          <span>3 de enero</span>
+        </div>
+      </div>
+      
+      <div class="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-8 shadow-lg card-hover">
+        <div class="flex items-center mb-6">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-white text-xl mr-4">
+            <i class="fas fa-fire"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-800">Quema del Castillo</h3>
+        </div>
+        <p class="text-gray-700 mb-4">Espectacular cierre con fuegos artificiales y pirotecnia que iluminan el cielo de Pasto. Un castillo pirotécnico es quemado simbólicamente para marcar el final de las festividades.</p>
+        <div class="flex items-center text-sm text-gray-600">
+          <i class="fas fa-calendar-alt mr-2"></i>
+          <span>6 de enero (noche)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Nueva sección: Datos Curiosos -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Datos Curiosos</h2>
+    
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-white rounded-2xl p-6 shadow-lg card-hover text-center">
+        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-2xl text-white mb-4">
+          <i class="fas fa-award"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Patrimonio de la Humanidad</h3>
+        <p class="text-gray-600">El Carnaval de Negros y Blancos fue declarado Patrimonio Cultural Inmaterial de la Humanidad por la UNESCO en 2009.</p>
+      </div>
+      
+      <div class="bg-white rounded-2xl p-6 shadow-lg card-hover text-center">
+        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-2xl text-white mb-4">
+          <i class="fas fa-history"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Orígenes Mestizos</h3>
+        <p class="text-gray-600">Sus raíces se remontan a rituales indígenas prehispánicos y tradiciones españolas, fusionadas durante la colonia.</p>
+      </div>
+      
+      <div class="bg-white rounded-2xl p-6 shadow-lg card-hover text-center">
+        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-2xl text-white mb-4">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Participación Masiva</h3>
+        <p class="text-gray-600">Atrae a más de 300,000 visitantes cada año y cuenta con la participación de aproximadamente 7,000 artistas y artesanos.</p>
+      </div>
+    </div>
+    
+    <div class="mt-12 bg-white rounded-2xl p-8 shadow-lg card-hover">
+      <div class="flex items-start">
+        <div class="w-16 h-16 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-white text-xl mr-6 flex-shrink-0">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+        <div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">¿Sabías que...?</h3>
+          <p class="text-gray-700 text-lg">Las carrozas del Carnaval de Pasto pueden medir hasta 12 metros de altura y están construidas completamente con materiales naturales como flores, semillas y madera. Cada carroza representa meses de trabajo artesanal y puede transportar hasta 30 personas durante el desfile.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contenido principal con calendario y cards -->
+<section class="py-16 bg-white" id="calendar-section">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="bg-white shadow-xl rounded-2xl p-6 card-hover mb-8">
+      <div class="flex items-center mb-6">
+        <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center text-white text-xl mr-4">
+          <i class="fas fa-calendar-days"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800">Calendario del Carnaval</h2>
+      </div>
+      <div id="calendar"></div>
+    </div>
 
     <!-- Cards informativos -->
     <div class="flex flex-col md:flex-row gap-6">
@@ -243,79 +318,137 @@
         </ul>
       </div>
     </div>
-    </div></div>
+  </div>
 </section>
 
+<!-- Elementos flotantes decorativos -->
+<div class="absolute bottom-10 left-10 w-6 h-6 rounded-full bg-pink-300 opacity-30 animate-pulse"></div>
+<div class="absolute top-20 right-20 w-8 h-8 rounded-full bg-purple-300 opacity-40 animate-pulse delay-1000"></div>
+<div class="absolute top-1/2 left-20 w-4 h-4 rounded-full bg-pink-400 opacity-50 animate-pulse delay-500"></div>
+<div class="absolute bottom-1/3 right-32 w-5 h-5 rounded-full bg-purple-400 opacity-40 animate-pulse delay-1500"></div>
 
-  <!-- Elementos flotantes decorativos -->
-  <div class="absolute bottom-10 left-10 w-6 h-6 rounded-full bg-pink-300 opacity-30 animate-pulse"></div>
-  <div class="absolute top-20 right-20 w-8 h-8 rounded-full bg-purple-300 opacity-40 animate-pulse delay-1000"></div>
-  <div class="absolute top-1/2 left-20 w-4 h-4 rounded-full bg-pink-400 opacity-50 animate-pulse delay-500"></div>
-  <div class="absolute bottom-1/3 right-32 w-5 h-5 rounded-full bg-purple-400 opacity-40 animate-pulse delay-1500"></div>
-</section>
-
+<!-- 💫 Modal Blanco Moderno -->
+<div id="eventModal" class="fixed inset-0 modal-overlay flex items-center justify-center z-50 p-4 opacity-0 pointer-events-none transition-all duration-500">
+  <div class="modal-container">
+    <button id="closeModal" class="close-button">
+      <i class="fas fa-times text-lg"></i>
+    </button>
+    
+    <div class="modal-header">
+      <h2 id="modalTitle" class="modal-title"></h2>
+      <div class="modal-meta">
+        <div class="meta-item">
+          <div class="meta-icon">
+            <i class="fas fa-calendar"></i>
+          </div>
+          <span id="modalFecha"></span>
+        </div>
+        <div class="meta-item">
+          <div class="meta-icon">
+            <i class="fas fa-tag"></i>
+          </div>
+          <span id="modalTipo"></span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-body">
+      <p id="modalDescripcion" class="modal-description"></p>
+      <div id="modalImageContainer" class="hidden">
+        <img id="modalImagen" class="modal-image" />
+      </div>
+    </div>
+  </div>
+</div>
 
 {% block javascripts %}
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-    const countdownEl = document.getElementById("countdown");
-    const daysEl = document.getElementById("days");
-    const hoursEl = document.getElementById("hours");
-    const minutesEl = document.getElementById("minutes");
-    const secondsEl = document.getElementById("seconds");
+  {{ parent() }}
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+  <script src="{{ asset('js/calendar.js') }}"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const countdownEl = document.getElementById("countdown");
+        const countdownLoading = document.getElementById("countdown-loading");
+        const daysEl = document.getElementById("days");
+        const hoursEl = document.getElementById("hours");
+        const minutesEl = document.getElementById("minutes");
+        const secondsEl = document.getElementById("seconds");
 
-    try {
-        const response = await fetch("/api/countdown");
-        const data = await response.json();
+        // Mostrar estado de carga y ocultar contador
+        countdownLoading.classList.remove("hidden");
+        countdownEl.classList.add("hidden");
 
-        if (data.error) {
-            countdownEl.innerHTML = `<p class="text-red-500 font-semibold">${data.error}</p>`;
-            return;
-        }
+        try {
+            const response = await fetch("/api/countdown");
+            const data = await response.json();
 
-        const startDate = new Date(data.fechaInicio).getTime();
-
-        const updateCountdown = () => {
-            const now = new Date().getTime();
-            const distance = startDate - now;
-
-            if (distance <= 0) {
-                clearInterval(interval);
-
-                // 🔥 Mensaje final animado y visual
-                countdownEl.innerHTML = `
-                    <div class="text-center py-6 animate-bounce">
-                        <h3 class="text-4xl font-bold text-pink-600">🎉 ${data.mensaje ?? "¡El Carnaval ha comenzado!"}</h3>
-                        <p class="text-gray-700 mt-2 text-lg">¡Disfruta de la fiesta! 💃🕺</p>
-                    </div>
-                `;
+            if (data.error) {
+                countdownLoading.innerHTML = `<p class="text-red-500 font-semibold">${data.error}</p>`;
                 return;
             }
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const startDate = new Date(data.fechaInicio).getTime();
 
-            daysEl.textContent = days;
-            hoursEl.textContent = hours;
-            minutesEl.textContent = minutes;
-            secondsEl.textContent = seconds;
+            // Ocultar estado de carga y mostrar contador
+            countdownLoading.classList.add("hidden");
+            countdownEl.classList.remove("hidden");
+
+            const updateCountdown = () => {
+                const now = new Date().getTime();
+                const distance = startDate - now;
+
+                if (distance <= 0) {
+                    clearInterval(interval);
+
+                    // 🔥 Mensaje final animado y visual
+                    countdownEl.innerHTML = `
+                        <div class="text-center py-6 animate-bounce col-span-4">
+                            <h3 class="text-4xl font-bold text-pink-600">🎉 ${data.mensaje ?? "¡El Carnaval ha comenzado!"}</h3>
+                            <p class="text-gray-700 mt-2 text-lg">¡Disfruta de la fiesta! 💃🕺</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                daysEl.textContent = days;
+                hoursEl.textContent = hours;
+                minutesEl.textContent = minutes;
+                secondsEl.textContent = seconds;
+            };
+
+            updateCountdown();
+            const interval = setInterval(updateCountdown, 1000);
+
+        } catch (err) {
+            countdownLoading.innerHTML = `<p class="text-red-500 font-semibold">Error al cargar el contador</p>`;
+            console.error(err);
+        }
+
+        // Animación de elementos al hacer scroll
+        const animateOnScroll = function() {
+          const elements = document.querySelectorAll('.card-hover, .countdown-box');
+          
+          elements.forEach(element => {
+            const position = element.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.3;
+            
+            if (position < screenPosition) {
+              element.classList.add('animate__animated', 'animate__fadeInUp');
+            }
+          });
         };
-
-        updateCountdown();
-        const interval = setInterval(updateCountdown, 1000);
-
-    } catch (err) {
-        countdownEl.innerHTML = `<p class="text-red-500 font-semibold">Error al cargar el contador</p>`;
-        console.error(err);
-    }
-});
-</script>
-
+        
+        window.addEventListener('scroll', animateOnScroll);
+        // Ejecutar una vez al cargar
+        setTimeout(animateOnScroll, 500);
+    });
+  </script>
 {% endblock %}
 
 {{ include('footer.html.twig') }}
 {% endblock %}
-
-
